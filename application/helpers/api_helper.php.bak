@@ -1,0 +1,320 @@
+<?php
+
+function runAPI($apiURI, $method, $parameters = NULL, $data = NULL, $additionalOptions = NULL) {
+    $baseAPIURL = 'https://miis-api.samrs.cloud/';
+
+    $url = $baseAPIURL . $apiURI;
+
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
+    // curl_setopt($ch, CURLOPT_HEADER, 1);
+    curl_setopt($ch, CURLOPT_VERBOSE, true);  
+    curl_setopt($ch, CURLOPT_USERAGENT, 'any');
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+
+    $headers[] = 'Access-Control-Allow-Origin: *';
+    $headers[] = 'X-HTTP-Method-Override: ' . $method;
+    $headers[] = 'Accept: application/json';
+    $headers[] = 'Cotnent-Type: image/jpeg';
+
+    if (isLoggedIn())
+        $headers[] = 'Authorization: Bearer ' . cookieData('token');
+
+    switch ($method) {
+        case 'POST':
+                // initialize post
+                if ($data) {
+                    $data['qG'][0] = array(); // EXACTOR
+                    $data['qG'][1] = array(); // LIKEOR
+                    $data['qG'][2] = array(); // LIKEAND
+                    $data['qG'][3] = array(); // BETWEEN
+
+                    // initialize additional parameters
+                    if (isset($data['additional']) && !empty($data['additional'])) {
+                        foreach ($data['additional'] as $paramKey => $paramValue) {
+                            $data['qG'][0]['queryMethod'] = 'EXACTOR';
+                            $data['qG'][0]['queryParams'] = array(
+                                array(    
+                                    "column" => $paramKey,
+                                    "value" => $paramValue
+                                )
+                            );
+                        }
+                        unset($data['additional']);
+                    }
+
+                    // initialize order parameters
+                    if (isset($data['order']) && !empty($data['order'])) {
+                        $order = explode('$', $data['order']);
+                        $data['sortingParams'][] = array(
+                            'column' => $order[0],
+                            "value" => $order[1]
+                        );
+                        unset($data['order']);
+                    }
+
+                    // initialize datatable search
+                    if (isset($data['search']) && !empty($data['search'])) {
+                        $searchParams = array();
+                        foreach ($data['search'] as $paramKey => $paramValue) {
+                            if ($paramKey != 'method') {
+                                $searchParams[] = array(
+                                    "column" => $paramKey,
+                                    "value" => $paramValue
+                                );
+                            }
+                        }
+
+                        if (!empty($searchParams)) {
+                            $data['qG'][1]['queryMethod'] = 'LIKEOR';
+                            $data['qG'][1]['queryParams'] = $searchParams;
+                        }
+
+                        unset($data['search']);
+                    }
+
+                    if (isset($data['directFilters']) && !empty($data['directFilters'])) {
+                        foreach ($data['directFilters'] as $key => $value) {
+                            if ($key == 'EXACTOR') {
+                                $data['qG'][1]['queryMethod'] = 'EXACTOR';
+                                $data['qG'][1]['queryParams'] = $value;
+                            } else if ($key == 'BETWEEN') {
+                                $data['qG'][3]['queryMethod'] = 'BETWEEN';
+                                $data['qG'][3]['queryParams'] = $value;
+                            } else if ($key == 'LIKEAND') {
+                                $data['qG'][2]['queryMethod'] = 'LIKEAND';
+                                $data['qG'][2]['queryParams'] = $value;
+                            }
+                        }
+                        unset($data['directFilters']);
+                    }
+                }
+                
+                if (!empty($data['qG'])) {
+                    $data['queryGroups'] = array();
+                    foreach ($data['qG'] as $key => $value) {
+                        if (!empty($value)) {
+                            $data['queryGroups'][] = $value;
+                        }
+                    }
+                    unset($data['qG']);
+                }
+
+                if (!empty($data['queryGroups'])) {
+                    $data['queryGroupMethod'] = 'AND';
+                } else {
+                    unset($data['queryGroups']);
+                }
+
+                if (isset($additionalOptions['withFile']) && $additionalOptions['withFile']) {
+                    $headers[] = 'Content-Type: multipart/form-data';
+
+                    $data = array(
+                        'files' => new \CURLFile($data['files'], $data['type'], $data['filename'].'.'.explode('/', $data['type'])[1])
+                    );
+                } else {        
+                    $headers[] = 'Content-Type: application/json; charset=utf-8';
+                    $data = json_encode($data);
+                }
+
+                curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+            break;
+
+        case 'GET':
+                // initialize parameters
+                if ($parameters) {
+                    $url .= '?';
+
+                    if (isset($additionalOptions['query']) && $additionalOptions['query']) {
+                        foreach ($parameters as $paramKey => $paramValue) {
+                            $url .= $paramKey . '=' . $paramValue;
+                        }
+                    } else {
+                        $url .= 'query=';
+                        
+                        // Pagination
+                        if (isset($parameters['page']) && isset($parameters['limit'])) {
+                            $url .= 'page=' . $parameters['page'] . '??' . 'limit=' . $parameters['limit'] . '??';
+                        }
+                    }
+                }
+            break;
+
+        default:
+            break;
+    }
+
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    // curl_setopt($ch, CURLOPT_HEADER, true);
+
+    $result = curl_exec($ch);
+    
+    $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    // $file_array = explode("\n\r", $result, 2);
+    // $header_array = explode("\n", $file_array[0]);
+    // foreach($header_array as $header_value) {
+    //     $header_pieces = explode(':', $header_value);
+    //     if(count($header_pieces) == 2) {
+    //         $headers[$header_pieces[0]] = trim($header_pieces[1]);
+    //     }
+    // }
+    // header('Content-type: image/jpeg');
+    // header("Content-Disposition: attachment; filename=120_25-119-99.jpeg; filename*=UTF-8''120_25-119-99.jpeg");
+    // echo substr($file_array[1], 1);
+
+    if ($apiURI != 'file/download') {
+        $result = json_decode($result, TRUE);
+        $result['httpStatus'] = $http_status;
+    }
+
+    if ($http_status == '401' && isLoggedIn()) {
+        refreshTokenifTokenExpired($baseAPIURL, $apiURI, $method, $parameters, $data, $http_status);
+    } else {
+        return $result;
+    }
+}
+
+function refreshTokenifTokenExpired($url, $apiURI = NULL, $method = NULL, $parameters = NULL, $data = NULL, $previousHttpStatus = NULL) {
+    
+    $refreshUrl = $url . 'user/reftok';
+    
+    $data = array(
+        'token'     => cookieData('token'),
+        'refToken'  => cookieData('refreshToken')
+    );
+    $data = json_encode($data);
+
+    $headers[] = 'Access-Control-Allow-Origin: *';
+    $headers[] = 'X-HTTP-Method-Override: POST';
+    $headers[] = 'Accept: application/json';
+    $headers[] = 'Content-Type: application/json; charset=utf-8';
+    $headers[] = 'Authorization: Bearer ' . cookieData('token');
+
+    $ref = curl_init($refreshUrl);
+    curl_setopt($ref, CURLOPT_URL, $refreshUrl);
+    curl_setopt($ref, CURLOPT_POST, true);
+    curl_setopt($ref, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($ref, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ref, CURLOPT_SSL_VERIFYHOST, false);
+    curl_setopt($ref, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ref, CURLOPT_RETURNTRANSFER, true);
+
+    $resultRef = curl_exec($ref);
+    curl_close($ref);
+
+    $resultRef = json_decode($resultRef, TRUE);
+    $resultRef = json_encode($resultRef);
+
+    if (is_string($resultRef)) {
+        // needReauthenticate();
+        redirect('auth/authentication/signIn');
+    } else {
+        runAPI($apiURI, $method, $parameters, $data);
+    }
+
+    // setUserCookie($resultRef, TRUE, TRUE);
+    
+    // echo $previousHttpStatus;
+
+    // if ($previousHttpStatus == '404') {
+    //     echo 'ngulang';
+    //     // refreshTokenifTokenExpired($url, $apiURI, $method, $parameters, $data, NULL);
+    // } else {
+        // runAPI($apiURI, $method, $parameters, $data);
+    // }
+
+    // echo $previousHttpStatus;
+
+    // if ($resultRef == null) {
+    //     refreshTokenifTokenExpired($baseAPIURL, $apiURI, $method, $parameters, $data);
+    // } else {
+    //     runAPI($url, $apiURI, $method, $parameters, $data);
+    // }
+}
+
+function initParameters($selectedColumns, $totalUnusedColumn = 2) {
+    $parameters = array();
+
+    // init pagination and limitation
+    $start = inputPost('start');
+    $limit = inputPost('length');
+
+    if ($start == 0) {
+        $page = 1;
+    } else {
+        $page = ($start / $limit) + 1;
+    }
+    $parameters['page'] = $page;
+    $parameters['limit'] = $limit;
+
+    // init quick search
+    $search = inputPost('search')['value'];
+    if ($search != '') {
+        $parameters['search'] = array();
+        foreach ($selectedColumns as $key => $value) {
+            $parameters['search'][$key] = $search;
+        }
+    }
+
+    // init column order
+    $order = inputPost('order')[0];
+    if ($order['column'] != '') {
+        $selCol = array_keys($selectedColumns);
+        $orderColumn = $selCol[($order['column']-$totalUnusedColumn)];
+        $parameters['order'] = $orderColumn . '$' . $order['dir'];
+    }
+
+    return $parameters;
+}
+
+function generateData($selectedColumns = NULL, $result, $deletedKey = NULL) {
+
+    $data = array();
+
+    if ($selectedColumns == NULL) {
+        if ($result['data'] && count($result['data']) > 0) {
+            foreach ($result['data'][0] as $key => $value) {
+                $selectedColumns[$key] = $value;
+            }
+        }
+    }
+
+    foreach ($result['data'] as $key => $value) {
+        
+        $data[$key] = array();
+
+        foreach ($selectedColumns as $colKey => $colName) {
+            // foreach ($value as $valKey => $valValue) {
+                if (!in_array($colKey, array_keys($data[$key]))) {
+                    // if (in_array($valKey, array_keys($selectedColumns)))
+                        $data[$key][$colKey] = $value[$colKey];
+
+                    // if (is_array($valValue)) {
+                    //     foreach ($valValue as $valValKey => $valValValue) {
+                    //         if (in_array(strval($valKey.'.'.$valValKey), array_keys($selectedColumns))) {
+                    //             $data[$key][$colKey] = $valValValue;
+                    //         }
+                    //     }
+                    // }
+                }
+            // }
+        }
+    }
+        
+    $finalData = array(
+        'draw'              => 0,
+        'recordsTotal'      => count($data),
+        'recordsFiltered'   => count($data),
+        'data'              => $data,
+        'allID'             => (isset($result['allID']) ? $result['allID'] : ''),
+    );
+
+    echo json_encode($finalData);
+}

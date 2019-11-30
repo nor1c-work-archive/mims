@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FilePond Demo</title>
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
+</head>
+<body>
+    
+    <input type="file" class="my-pond" name="filepond"/>
+
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+    
+    <script>
+    // Register the plugin
+    FilePond.registerPlugin(FilePondPluginImagePreview);
+    
+    // ... FilePond initialisation code here
+    </script>
+    <script>
+        const inputElement = document.querySelector('input[type="file"]');
+        const pond = FilePond.create( inputElement );
+    </script>
+
+</body>
+</html>

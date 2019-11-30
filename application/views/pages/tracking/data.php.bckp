@@ -1,0 +1,87 @@
+<input id="scan" type="text" name="barcode" class="form-control" placeholder="SCANNED CODE" autofocus>
+
+<div id="loading" style="text-align:center">
+    <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+    <br>
+    <h6><b>Please Wait</b></h6>
+</div>
+<div id="boxLocation" style="width:15%;margin:0 auto;padding:30px 10px;border-radius:5px;background:#fcfcfc;border:dotted 1px #ccc;text-align:center;font-weight:bold;font-size:20px;margin-top:20px;">BOX LOCATION</div>
+<br>
+<table class="table table-stripped">
+    <thead>
+        <th>INSTRUMENT DETAIL</th>
+        <th>CONTAINER/BOX LOCATION</th>
+        <th>SET LOCATION</th>
+    </thead>
+    <tbody id="scannedArea"></tbody>
+</table>
+
+<script>
+
+    $(document).ready(function() {
+
+        checkFocus();
+
+        $('#scan').focus();
+        $('#loading').hide();
+        $('#boxLocation').hide();
+
+        $(document).click(function() {
+            $('#scan').focus();
+            checkFocus();
+        });
+
+        $('#scan').change(function() {
+            $('#loading').show();
+
+            $.ajax({
+                'url': '<?=site_url('tracking/scan?code=')?>' + $(this).val(),
+                'method': 'GET'
+            }).then(res => {
+                if (res) {
+                    res = JSON.parse(res);
+
+                    piece = res.piece.data[0];
+                    set = res.set.data[0];
+                    if (res.box != undefined) {
+                        box = res.box.data[0];
+                    }
+
+                    $('#boxLocation').show();
+                    
+                    if (set) {
+                        var scannedHTML =   '<tr>'+
+                                                '<td><b>'+$(this).val()+'</b> | '+piece.assetName+'</td>'+
+                                                '<td><b>'+box.catCode+'-'+box.idAsset+'</b> | '+box.assetName+'</td>'+
+                                                '<td><b>'+set.catCode+'-'+set.idAsset+'</b> | '+set.assetName+'</td>'+
+                                            '</tr>';
+                        $('#boxLocation').html(box.catCode+'-'+box.idAsset);
+                    } else {
+                        var scannedHTML = '<tr><td colspan="3" style="text-align:center">NOT IN SET</td></tr>';
+                        $('#boxLocation').html('NOT FOUND');
+                    }
+                } else {
+                    var scannedHTML = '<tr><td colspan="3" style="text-align:center">NOT FOUND</td></tr>';
+                }
+
+                $('#scannedArea').prepend(scannedHTML);
+                $('#loading').hide();
+                $(this).val('');
+                $(this).focus();
+                checkFocus();
+            });
+        });
+
+    });
+
+    function checkFocus() {
+        if ($('#scan').focus()) {
+            // console.log('ready scan');
+        } else {
+            // console.log('paused');
+        }
+    }
+
+</script>

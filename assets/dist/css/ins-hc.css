@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+* {
+    /* font-family: Roboto; */
+}
+
+.radius-5 {
+    border-radius: 5px;
+}
+
+.padding-10 {
+    padding: 10px;
+}
+
+.ins-smooth-border {
+    -webkit-box-shadow: 0px 0px 21px -14px rgba(0,0,0,0.49);
+    -moz-box-shadow: 0px 0px 21px -14px rgba(0,0,0,0.49);
+    box-shadow: 0px 0px 21px -14px rgba(0,0,0,0.49);
+}
+
+nav {
+    font-family: Roboto;
+    font-size: 14px;
+}
+
+/* .sidebar-nav {
+    margin-top: 40px;
+} */
+
+/* .topbar .top-navbar .navbar-nav>.nav-item>.nav-link {
+    line-height: inherit !important;
+} */
+
+
+.hc-offcanvas-nav a, .hc-offcanvas-nav .nav-item {
+    color: #000;
+    border-bottom: solid 1px #eee !important;
+}
+
+.hc-offcanvas-nav li.nav-close span, .hc-offcanvas-nav li.nav-parent span.nav-next, .hc-offcanvas-nav li.nav-back span {
+    color: #333333 !important;
+}
+
+#main-wrapper[data-layout=vertical][data-sidebartype=full] .page-wrapper, #main-wrapper[data-layout=vertical][data-sidebartype=overlay] .page-wrapper {
+    margin-left: 0 !important;
+}
+
+#main-wrapper[data-layout=vertical][data-sidebar-position=fixed][data-sidebartype=full] .topbar .top-navbar .navbar-collapse, #main-wrapper[data-layout=vertical][data-sidebar-position=fixed][data-sidebartype=overlay] .topbar .top-navbar .navbar-collapse {
+    margin-left: 0 !important;
+}
+
+.hc-nav-trigger {
+    position: inherit !important;
+}
+
+header {
+    padding: 0 !important;
+}
