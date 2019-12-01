@@ -39,6 +39,7 @@ class Assets extends INS_Controller {
                                         array('column' => 'assetParent', 'alias' => 'KODE SISTEM', 'width' => 10, 'searchable' => TRUE, 'hide' => FALSE),
                                         array('column' => 'assetName', 'alias' => ($this->catCode == env('C_PIECE') ? 'NAMA INSTRUMENT' : 'NAMA ASET'), 'width' => 30, 'searchable' => TRUE, 'hide' => FALSE),
                                         array('column' => 'dummy.setContainer', 'alias' => 'CONTAINER/BOX', 'width' => 30, 'searchable' => FALSE, 'hide' => FALSE),
+                                        array('column' => 'propAdmin.idLocation', 'alias' => 'LOKASI', 'width' => 10, 'searchable' => FALSE, 'hide' => FALSE),
                                         array('column' => 'propAdmin.condition', 'alias' => 'KONDISI', 'width' => 10, 'searchable' => FALSE, 'hide' => FALSE),
                                         array('column' => 'propAdmin.status', 'alias' => 'STATUS', 'width' => 10, 'searchable' => FALSE, 'hide' => FALSE),
                                         array('column' => 'propAdmin.priceBuy', 'alias' => 'HARGA BELI', 'width' => 10, 'searchable' => TRUE, 'hide' => FALSE),
@@ -229,7 +230,9 @@ class Assets extends INS_Controller {
 
         if (isset($data['asset'])) {
             // insert from form
-            // START OF INSERT/UPDATE SET
+			// START OF INSERT/UPDATE SET
+			echo json_encode($data); die();
+
             foreach ($data['asset'] as $assetKey => $assetValue) {
                 $qty = (isset($assetValue['quantity']) ? $assetValue['quantity'] : 1);
                 for ($i=1; $i <= $qty; $i++) { // kalau langsung input piece

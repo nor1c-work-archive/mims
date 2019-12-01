@@ -32,7 +32,7 @@
 		// input('select2', 'Level Resiko', 'riskLevel', 'asset[1][riskLevel]', ' select2 ', '3', ' style="width:100%" ', 'Pilih Level Resiko', explode(',', env('LEVEL_RESIKO')));
 		input('select2', 'Kondisi', 'condition', 'asset[1][condition]', ' select2 ', '3', ' style="width:100%" ', 'Pilih Kondisi', explode(',', env('KONDISI')));
 		input('select2', 'Status', 'status', 'asset[1][status]', ' select2 ', '3', ' style="width:100%" ', 'Pilih Status', explode(',', env('STATUS')));
-		// input('select2_automatic', 'Lokasi', 'idLocation', 'asset[1][idLocation]', 'locationSelector', '8', ' style="width:100%" ');
+		input('select2_automatic', 'Lokasi', 'idLocation', 'asset[1][idLocation]', 'locationSelector', '8', '  ');
 		// input('select2_automatic', 'Supplier', 'idSupplier', 'asset[1][supplier]', 'supplierSelector', '6', ' style="width:100%" ');
 		// input('textarea', 'Deskripsi Aset', 'assetDesc', 'asset[1][assetDesc]', '', '9');
 		?>
@@ -127,20 +127,20 @@
 			$('#procureDateTH').hide();
 		}
 
-		// // Default Option Merk
-		// $.ajax({
-		// 	'url': '<?= site_url('ajax/catalogue/MIP') ?>',
-		// }).then(res => {
-		// 	res = JSON.parse(res);
+		// Default Option Location
+		$.ajax({
+			'url': '<?= site_url('ajax/room') ?>',
+		}).then(res => {
+			res = JSON.parse(res);
 
-		// 	var Opt = '';
-		// 	for (key in res) {
-		// 		Opt += '<option value="' + key + '">' + res[key] + '</option>';
-		// 	}
+			var Opt = '';
+			for (key in res) {
+				Opt += '<option value="' + res[key].split('|')[0].split('-')[1].replace(' ', '') + '">' + res[key] + '</option>';
+			}
 
-		// 	$('select[name="instruments['+addCount+'][idAssetMaster]"]').append(Opt);
-		// });
-		// $('.instrumentSelector').select2();
+			$('select[name="asset['+addCount+'][idLocation]"]').append(Opt);
+		});
+		$('.locationSelector').select2();
 	});
 
 	function initializeInputAdv(res) {
@@ -157,7 +157,7 @@
 
 		// autoselect set catalogue
 		setCatalogue = res.setCatalogue.data[0];
-		$("#idAssetMaster").empty().append('<option value="' + setCatalogue.idAssetMaster + '">' + setCatalogue.productCode + ' | ' + setCatalogue.assetMasterName + '</option>').val(setCatalogue.idAssetMaster).trigger('change');
+		// $("#idAssetMaster").empty().append('<option value="' + setCatalogue.idAssetMaster + '">' + setCatalogue.productCode + ' | ' + setCatalogue.assetMasterName + '</option>').val(setCatalogue.idAssetMaster).trigger('change');
 
 		// autofill set
 		set = res.set.data[0];

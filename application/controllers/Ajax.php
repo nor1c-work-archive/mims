@@ -55,4 +55,20 @@ class Ajax extends INS_Controller {
 		echo json_encode($collectedCatalogue);
 	}
 
+	public function room() {
+		$roomParameters['directFilters']['EXACTOR'][] = ['column' => 'locType', 'value' => 'ROOM'];
+		
+		$response = runAPI('location/query', 'POST', NULL, $roomParameters);
+
+		$collectedRooms = [];
+		foreach ($response['data'] as $key => $value) {
+			if (!in_array($value['idLocation'], $collectedRooms) && $value['idLocation']) {
+				$collectedRooms[$value['idLocation']] = env('L_ROOM') . '-' . $value['idLocation'] . ' | ' . $value['locName'];
+			}
+		}
+
+		sort($collectedRooms);
+		echo json_encode($collectedRooms);
+	}
+
 }
