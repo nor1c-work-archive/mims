@@ -53,10 +53,7 @@ function runAPI($apiURI, $method, $parameters = NULL, $data = NULL, $additionalO
                     // initialize order parameters
                     if (isset($data['order']) && !empty($data['order'])) {
                         $order = explode('$', $data['order']);
-                        $data['sortingParams'][] = [
-                            'column' => $order[0],
-                            "value" => $order[1]
-						];
+                        $data['sortingParams'][] = ['column' => $order[0],"value" => $order[1]];
                         unset($data['order']);
                     }
 
@@ -65,10 +62,7 @@ function runAPI($apiURI, $method, $parameters = NULL, $data = NULL, $additionalO
                         $searchParams = [];
                         foreach ($data['search'] as $paramKey => $paramValue) {
                             if ($paramKey != 'method') {
-                                $searchParams[] = [
-                                    "column" => $paramKey,
-                                    "value" => $paramValue
-								];
+                                $searchParams[] = ["column" => $paramKey,"value" => $paramValue];
                             }
                         }
 
@@ -347,7 +341,7 @@ function generateData($selectedColumns = NULL, $result, $deletedKey = NULL) {
                             $data[$no][] = '-';
                     } else if ($column == 'roomBuilding') {
 						$parameters[$no] = [];
-						$parameters[$no]['directFilters']['EXACTOR'][] = ["column" => "idLocation", "value" => $dataValue['idLocation']];
+						$parameters[$no]['directFilters']['EXACTOR'][] = ['column' => 'idLocation', 'value' => $dataValue['idLocation']];
 						$parentLoc[$no] = runAPI('location/query', 'POST', NULL, $parameters[$no])['data'][0]['parentLoc'];
 
 						if (!empty($parentLoc[$no])) {
@@ -357,6 +351,22 @@ function generateData($selectedColumns = NULL, $result, $deletedKey = NULL) {
 
 							$data[$no][] = !empty($building[$no]) ? env('L_BUILDING') . '-' . $building[$no]['idLocation'] . ' | ' . $building[$no]['locName'] : '-';
 						} else 
+							$data[$no][] = '-';
+					} else if ($column = 'setLocation') {
+                    	$locParameters[$no]['directFilters']['EXACTOR'][] = ['column' => 'idAsset', 'value' => $dataValue['idAsset']];
+                    	$loc[$no] = runAPI('asset/query', 'POST', NULL, $locParameters[$no])['data'][0]['propAdmin']['idLocation'];
+
+                    	if (!empty($loc[$no]) && $loc[$no]) {
+							$roomParameters[$no]['directFilters']['EXACTOR'][] = ['column' => 'idLocation', 'value' => $loc[$no]];
+							$roomDetail[$no] = runAPI('location/query', 'POST', NULL, $roomParameters[$no])['data'][0];
+
+							$room[$no] = env('L_ROOM') . '-' . $roomDetail[$no]['idLocation'] . ' ' . $roomDetail[$no]['locName'];
+
+							$buildingParameters[$no]['directFilters']['EXACTOR'][] = ['column' => 'idLocation', 'value' => $roomDetail[$no]['parentLoc']];
+							$buildingDetail[$no] = runAPI('location/query', 'POST', NULL, $buildingParameters[$no])['data'][0];
+
+							$data[$no][] = $room[$no] . ', ' . $buildingDetail[$no]['locName'];
+						} else
 							$data[$no][] = '-';
 					}
                 } else

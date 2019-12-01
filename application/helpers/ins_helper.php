@@ -234,29 +234,6 @@ function rekapPdf($html = '', $filename = 'Rekap PDF', $paperSize = 'A4', $orien
 
 function input($type = NULL, $title = '', $id = '', $inputName = '', $classes = '', $size = '4', $additionalHtml = '', $defaultOption = '-', $options = NULL, $selectedOption = NULL) {
     switch ($type) {
-        case 'select2_automatic':
-                $html = '<div class="form-group row align-items-center mb-0">
-                            <label class="col-3 control-label col-form-label">'.$title.'</label>
-                            <div class="col-'.$size.' border-left pb-2 pt-2">
-                                <select id="'.$id.'" name="'.$inputName.'" class="form-control '.$classes.'" '.$additionalHtml.'></select>
-                            </div>
-                        </div>';
-            break;
-
-        case 'select2':
-                $html = '<div class="form-group row align-items-center mb-0">
-                            <label class="col-3 control-label col-form-label">'.$title.'</label>
-                            <div class="col-'.$size.' border-left pb-2 pt-2">
-                                <select id="'.$id.'" name="'.$inputName.'" class="form-control '.$classes.' " '.$additionalHtml.'>
-                                    <option value="" selected readonly disabled>'.$defaultOption.'</option>';
-                                    foreach ($options as $key => $value) {
-                                        $html .= '<option value="'.$value.'">'.$value.'</option>';
-                                    }
-                $html .=        '</select>
-                            </div>
-                        </div>';
-            break;
-
         case 'text':
                 $html = '<div class="form-group row align-items-center mb-0">
                             <label class="col-3 control-label col-form-label">'.$title.'</label>
@@ -286,6 +263,33 @@ function input($type = NULL, $title = '', $id = '', $inputName = '', $classes = 
                             }
                 $html .= '</select>';
             break;
+
+		case 'select2_automatic':
+			$html = '<div class="form-group row align-items-center mb-0">
+                            <label class="col-3 control-label col-form-label">'.$title.'</label>
+                            <div class="col-'.$size.' border-left pb-2 pt-2">
+                                <select id="'.$id.'" name="'.$inputName.'" class="form-control '.$classes.'" '.$additionalHtml.'></select>
+                            </div>
+                        </div>';
+			break;
+
+		case 'select2':
+			$html = '<div class="form-group row align-items-center mb-0">
+                            <label class="col-3 control-label col-form-label">'.$title.'</label>
+                            <div class="col-'.$size.' border-left pb-2 pt-2">
+                                <select id="'.$id.'" name="'.$inputName.'" class="form-control '.$classes.' " '.$additionalHtml.'>';
+			if ($defaultOption) {
+				$html .= '<option value="" selected readonly disabled>'.$defaultOption.'</option>';
+			}
+			if ($options) {
+				foreach ($options as $key => $value) {
+					$html .= '<option value="'.$value.'">'.$value.'</option>';
+				}
+			}
+			$html .=        '</select>
+                            </div>
+                        </div>';
+			break;
         
         default:
                 $html = '';

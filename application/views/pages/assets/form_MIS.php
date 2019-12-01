@@ -24,17 +24,17 @@
 		</div>
 
 		<?php
-		// input('select2_automatic', 'Katalog Instrument Set', 'idAssetMaster', 'asset[1][idAssetMaster]', 'setMasterSelector', '8', ' style="width:100%" ');
-		// input('text', 'Nama Aset', 'assetName', 'asset[1][assetName]', '', '8', ' required ');
-		input('select2_automatic', 'Instrument Set', 'idAssetMaster', 'asset[1][idAssetMaster]', 'setMasterSelector', '8', ' style="width:100%" ');
-		input('hidden', 'Nama Aset', 'assetName', 'asset[1][assetName]', 'assetName', '8', ' required ');
-		// input('text', 'Kategori Set', 'insCategory', 'asset[1][insCategory]', '', '4', ' required ');
-		// input('select2', 'Level Resiko', 'riskLevel', 'asset[1][riskLevel]', ' select2 ', '3', ' style="width:100%" ', 'Pilih Level Resiko', explode(',', env('LEVEL_RESIKO')));
-		input('select2', 'Kondisi', 'condition', 'asset[1][condition]', ' select2 ', '3', ' style="width:100%" ', 'Pilih Kondisi', explode(',', env('KONDISI')));
-		input('select2', 'Status', 'status', 'asset[1][status]', ' select2 ', '3', ' style="width:100%" ', 'Pilih Status', explode(',', env('STATUS')));
-		input('select2_automatic', 'Lokasi', 'idLocation', 'asset[1][idLocation]', 'locationSelector', '8', '  ');
-		// input('select2_automatic', 'Supplier', 'idSupplier', 'asset[1][supplier]', 'supplierSelector', '6', ' style="width:100%" ');
-		// input('textarea', 'Deskripsi Aset', 'assetDesc', 'asset[1][assetDesc]', '', '9');
+			// input('select2_automatic', 'Katalog Instrument Set', 'idAssetMaster', 'asset[1][idAssetMaster]', 'setMasterSelector', '8', ' style="width:100%" ');
+			// input('text', 'Nama Aset', 'assetName', 'asset[1][assetName]', '', '8', ' required ');
+			input('select2_automatic', 'Instrument Set', 'idAssetMaster', 'asset[1][idAssetMaster]', 'setMasterSelector', '8', ' style="width:100%" ');
+			input('hidden', 'Nama Aset', 'assetName', 'asset[1][assetName]', 'assetName', '8', ' required ');
+			// input('text', 'Kategori Set', 'insCategory', 'asset[1][insCategory]', '', '4', ' required ');
+			// input('select2', 'Level Resiko', 'riskLevel', 'asset[1][riskLevel]', ' select2 ', '3', ' style="width:100%" ', 'Pilih Level Resiko', explode(',', env('LEVEL_RESIKO')));
+			input('select2', 'Kondisi', 'condition', 'asset[1][condition]', ' select2 ', '3', ' style="width:100%" ', 'Pilih Kondisi', explode(',', env('KONDISI')));
+			input('select2', 'Status', 'status', 'asset[1][status]', ' select2 ', '3', ' style="width:100%" ', 'Pilih Status', explode(',', env('STATUS')));
+			input('select2', 'Lokasi', 'idLocation', 'asset[1][idLocation]', 'locationSelector', '5', ' style="width:100%" ', 'Pilih Ruangan');
+			// input('select2_automatic', 'Supplier', 'idSupplier', 'asset[1][supplier]', 'supplierSelector', '6', ' style="width:100%" ');
+			// input('textarea', 'Deskripsi Aset', 'assetDesc', 'asset[1][assetDesc]', '', '9');
 		?>
 	</div>
 </fieldset>
@@ -166,22 +166,23 @@
 		$('#systemCodeDiv').show();
 		$('#systemCode').html('<?= uriSegment(3) ?>-' + set.idAsset);
 		for (var key in set) {
-			if (key == 'assetParent') {
+			if (key == 'assetParent')
 				setBox(set.assetParent);
-			} else {
+			else
 				$('#form #' + key).val(set[key]);
-			}
 		}
 
 		// set propAdmin information
 		propAdmin = set.propAdmin;
 		var propAdminOpt = ['riskLevel', 'ownershipType', 'condition', 'status'];
 		for (var key in propAdmin) {
-			if (key == 'procureDate') {
+			if (key == 'procureDate')
 				$('#form #' + key).val(moment(propAdmin[key]).format('DD/MM/Y'));
-			} else if (propAdminOpt.includes(key)) {
+			else if (propAdminOpt.includes(key))
 				$('#form #' + key).val(propAdmin[key]).trigger('change');
-			} else
+			else if (key == 'idLocation')
+				$('#form .locationSelector').val(propAdmin[key]).trigger('change');
+			else
 				$('#form #' + key).val(propAdmin[key]);
 		}
 
