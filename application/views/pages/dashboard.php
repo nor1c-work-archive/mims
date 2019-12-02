@@ -40,8 +40,7 @@
 			<li>
 				<a href="<?= site_url('master/v/MIP') ?>">
 					<div class="image-cover">
-						<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRKtfoWUBEdy_e-9gUFWAKojN9z2nSMInUV6O4UOxJH19GN0qMcg">
-						<!-- <img src="<?=base_url('assets/images/icons/gunting_1.svg')?>"> -->
+						<img src="<?=base_url('assets/images/logo/web/pieceCatalogue.svg')?>" alt="">
 					</div>
 					<span>
 						Katalog<br>Instrument
@@ -51,7 +50,7 @@
 			<li>
 				<a href="<?= site_url('master/v/MIS') ?>">
 					<div class="image-cover">
-						<img src="https://www.lumiere32.sg/media/resized/94b34a0e45b7986aec91626a441b7e98.png">
+						<img src="<?=base_url('assets/images/logo/web/setCatalogue.svg')?>" alt="">
 					</div>
 					<span>
 						Katalog<br>Instrument Set
@@ -59,29 +58,9 @@
 				</a>
 			</li>
 			<li>
-				<a href="<?= site_url('assets/v/MIP') ?>">
-					<div class="image-cover">
-						<img src="http://atlas-content-cdn.pixelsquid.com/stock-images/medical-scissors-1VJ6GvB-600.jpg">
-					</div>
-					<span>
-						Inventaris<br>Instrument
-					</span>
-				</a>
-			</li>
-			<li>
-				<a href="<?= site_url('assets/v/MIS') ?>">
-					<div class="image-cover">
-						<img src="https://www.sccpre.cat/mypng/detail/274-2740178_surgical-instrument-medicine-medical-equipment-surgery-medical-tools.png">
-					</div>
-					<span>
-						Inventaris<br>Instrument Set
-					</span>
-				</a>
-			</li>
-			<li>
 				<a href="<?= site_url('assets/v/MIC') ?>">
 					<div class="image-cover">
-						<img src="http://www.paragonmedical.com/images/product-photo-gallery/cases-and-trays/case-and-tray-2-large.png">
+						<img src="<?=base_url('assets/images/logo/web/containerAsset.svg')?>" alt="">
 					</div>
 					<span>
 						Inventaris<br>Container/Box
@@ -89,9 +68,29 @@
 				</a>
 			</li>
 			<li>
+				<a href="<?= site_url('assets/v/MIS') ?>">
+					<div class="image-cover">
+						<img src="<?=base_url('assets/images/logo/web/setAsset.svg')?>" alt="">
+					</div>
+					<span>
+						Inventaris<br>Instrument Set
+					</span>
+				</a>
+			</li>
+			<li>
+				<a href="<?= site_url('assets/v/MIP') ?>">
+					<div class="image-cover">
+						<img src="<?=base_url('assets/images/logo/web/pieceAsset.svg')?>" alt="">
+					</div>
+					<span>
+						Inventaris<br>Instrument
+					</span>
+				</a>
+			</li>
+			<li>
 				<a href="<?= site_url('tracking') ?>">
 					<div class="image-cover">
-						<img src="http://livartix.ro/wp-content/uploads/2017/11/surgi_1.jpg">
+						<img src="<?=base_url('assets/images/logo/web/assetScan.svg')?>" alt="">
 					</div>
 					<span>
 						Instrument<br>Tracking
@@ -108,8 +107,8 @@
 					<div class="card-body">
 						<div class="d-flex no-block align-items-center">
 							<div class="text-white">
-								<h2>120</h2>
-								<h6>Container/Box</h6>
+								<h2><?=$countMIC?></h2>
+								<h4>Container/Box</h4>
 							</div>
 							<div class="ml-auto">
 								<span class="text-white display-6"><i class="fas fa-box-open"></i></span>
@@ -125,8 +124,8 @@
 					<div class="card-body">
 						<div class="d-flex no-block align-items-center">
 							<div class="text-white">
-								<h2>1100</h2>
-								<h6>Instrument Set</h6>
+								<h2><?=$countMIS?></h2>
+								<h4>Instrument Set</h4>
 							</div>
 							<div class="ml-auto">
 								<span class="text-white display-6"><i class="fas fa-box"></i></span>
@@ -142,8 +141,8 @@
 					<div class="card-body">
 						<div class="d-flex no-block align-items-center">
 							<div class="text-white">
-								<h2>120810</h2>
-								<h6>Instrument Pieces</h6>
+								<h2><?=$countMIP?></h2>
+								<h4>Instrument Pieces</h4>
 							</div>
 							<div class="ml-auto">
 								<span class="text-white display-6"><i class="fas fa-cut"></i></span>

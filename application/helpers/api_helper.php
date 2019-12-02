@@ -305,7 +305,7 @@ function generateData($selectedColumns = NULL, $result, $deletedKey = NULL) {
                         $parameters[$no]['directFilters']['EXACTOR'][] = ["column" => "catCode", "value" => env('C_SET')];
                         $parameters[$no]['directFilters']['EXACTOR'][] = ["column" => "assetParent","value" => $dataValue['idAsset']];
                         $containSet[$no] = runAPI('asset/query', 'POST', NULL, $parameters[$no])['data'];
-                        
+
                         $data[$no][] = !empty($containSet[$no]) ? 'Filled' : 'Available';
                     } else if ($column == 'pieceInstrumentSet') {
                         $parameters[$no] = [];
@@ -322,7 +322,7 @@ function generateData($selectedColumns = NULL, $result, $deletedKey = NULL) {
                             $containerParameters[$no] = [];
                             $containerParameters[$no]['directFilters']['EXACTOR'][] = ["column" => "idAsset", "value" => $set[$no][0]['assetParent']];
                             $container[$no] = runAPI('asset/query', 'POST', NULL, $containerParameters[$no])['data'];
-                            
+
                             $data[$no][] = !empty($container[$no]) ? $container[$no][0]['catCode'].'-'.$container[$no][0]['idAsset'].' | '.$container[$no][0]['assetName'] : '-';
                         } else
                             $data[$no][] = '-';
@@ -335,7 +335,7 @@ function generateData($selectedColumns = NULL, $result, $deletedKey = NULL) {
                             $containerParameters[$no] = [];
                             $containerParameters[$no]['directFilters']['EXACTOR'][] = ["column" => "idAsset", "value" => $set[$no][0]['assetParent']];
                             $container[$no] = runAPI('asset/query', 'POST', NULL, $containerParameters[$no])['data'];
-                            
+
                             $data[$no][] = !empty($container[$no]) ? $container[$no][0]['catCode'].'-'.$container[$no][0]['idAsset'].' | '.$container[$no][0]['assetName'] : '-';
                         } else
                             $data[$no][] = '-';
@@ -350,22 +350,31 @@ function generateData($selectedColumns = NULL, $result, $deletedKey = NULL) {
 							$building[$no] = runAPI('location/query', 'POST', NULL, $buildingParameters[$no])['data'][0];
 
 							$data[$no][] = !empty($building[$no]) ? env('L_BUILDING') . '-' . $building[$no]['idLocation'] . ' | ' . $building[$no]['locName'] : '-';
-						} else 
+						} else
 							$data[$no][] = '-';
-					} else if ($column = 'setLocation') {
-                    	$locParameters[$no]['directFilters']['EXACTOR'][] = ['column' => 'idAsset', 'value' => $dataValue['idAsset']];
-                    	$loc[$no] = runAPI('asset/query', 'POST', NULL, $locParameters[$no])['data'][0]['propAdmin']['idLocation'];
+					} else if ($column == 'setBuilding') {
+						$locParameters[$no]['directFilters']['EXACTOR'][] = ['column' => 'idAsset', 'value' => $dataValue['idAsset']];
+						$loc[$no] = runAPI('asset/query', 'POST', NULL, $locParameters[$no])['data'][0]['propAdmin']['idLocation'];
 
-                    	if (!empty($loc[$no]) && $loc[$no]) {
+						if (!empty($loc[$no]) && $loc[$no]) {
 							$roomParameters[$no]['directFilters']['EXACTOR'][] = ['column' => 'idLocation', 'value' => $loc[$no]];
 							$roomDetail[$no] = runAPI('location/query', 'POST', NULL, $roomParameters[$no])['data'][0];
-
-							$room[$no] = env('L_ROOM') . '-' . $roomDetail[$no]['idLocation'] . ' ' . $roomDetail[$no]['locName'];
 
 							$buildingParameters[$no]['directFilters']['EXACTOR'][] = ['column' => 'idLocation', 'value' => $roomDetail[$no]['parentLoc']];
 							$buildingDetail[$no] = runAPI('location/query', 'POST', NULL, $buildingParameters[$no])['data'][0];
 
-							$data[$no][] = $room[$no] . ', ' . $buildingDetail[$no]['locName'];
+							$data[$no][] = env('L_BUILDING') . '-' . $buildingDetail[$no]['idLocation'] . ' | ' . $buildingDetail[$no]['locName'];
+						} else
+							$data[$no][] = '-';
+					} else if ($column == 'setRoom') {
+						$locParameters[$no]['directFilters']['EXACTOR'][] = ['column' => 'idAsset', 'value' => $dataValue['idAsset']];
+						$loc[$no] = runAPI('asset/query', 'POST', NULL, $locParameters[$no])['data'][0]['propAdmin']['idLocation'];
+
+						if (!empty($loc[$no]) && $loc[$no]) {
+							$roomParameters[$no]['directFilters']['EXACTOR'][] = ['column' => 'idLocation', 'value' => $loc[$no]];
+							$roomDetail[$no] = runAPI('location/query', 'POST', NULL, $roomParameters[$no])['data'][0];
+
+							$data[$no][] = env('L_ROOM') . '-' . $roomDetail[$no]['idLocation'] . ' | ' . $roomDetail[$no]['locName'];
 						} else
 							$data[$no][] = '-';
 					}

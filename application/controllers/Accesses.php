@@ -4,13 +4,13 @@ class Accesses extends INS_Controller {
     
     public function __construct() {
         parent::__construct();
-        $this->selectedColumns = array('idRole' => 'ID', 'roleName' => 'Role', 'roleDesc' => 'Description');
-        $this->searchableColumns = array('roleName' => 'Role', 'roleDesc' => 'Description');
-        $this->totalUnusedColumn = 2;
+        $this->selectedColumns 		= ['idRole' => 'ID', 'roleName' => 'Role', 'roleDesc' => 'Description'];
+        $this->searchableColumns 	= ['roleName' => 'Role', 'roleDesc' => 'Description'];
+        $this->totalUnusedColumn 	= 2;
     }
 
     public function index() {
-        $data['columnDefinition']   = array($this->selectedColumns, $this->searchableColumns, $this->totalUnusedColumn);
+        $data['columnDefinition']   = [$this->selectedColumns, $this->searchableColumns, $this->totalUnusedColumn];
 
         render('module', $data);
     }

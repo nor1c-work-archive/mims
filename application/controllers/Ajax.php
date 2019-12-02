@@ -9,11 +9,10 @@ class Ajax extends INS_Controller {
 	public function instrumentCategories() {
 		$response = runAPI('asset/list', 'GET');
 
-		$collectedCategory = array();
+		$collectedCategory = [];
 		foreach ($response['data'] as $key => $value) {
-			if (!in_array($value['propInstrument']['insCategory'], $collectedCategory) && $value['propInstrument']['insCategory']) {
+			if (!in_array($value['propInstrument']['insCategory'], $collectedCategory) && $value['propInstrument']['insCategory'])
 				$collectedCategory[] = $value['propInstrument']['insCategory'];
-			}
 		}
 
 		sort($collectedCategory);
@@ -25,9 +24,8 @@ class Ajax extends INS_Controller {
 
 		$collectedMerk = array();
 		foreach ($response['data'] as $key => $value) {
-			if (!in_array($value['merk'], $collectedMerk) && $value['merk']) {
+			if (!in_array($value['merk'], $collectedMerk) && $value['merk'])
 				$collectedMerk[] = $value['merk'];
-			}
 		}
 
 		sort($collectedMerk);
@@ -37,18 +35,14 @@ class Ajax extends INS_Controller {
 	public function catalogue() {
 		$catCode = uriSegment(3);
 
-		$parameters['directFilters']['EXACTOR'][] = [
-			"column" => 'catCode',
-			"value" => $catCode
-		];
+		$parameters['directFilters']['EXACTOR'][] = ["column" => 'catCode', "value" => $catCode];
 		$parameters['limit'] = 10;
 		$response = runAPI('asset/masterquery', 'POST', NULL, $parameters);
 
-		$collectedCatalogue = array();
+		$collectedCatalogue = [];
 		foreach ($response['data'] as $key => $value) {
-			if (!in_array($value['idAssetMaster'], $collectedCatalogue) && $value['idAssetMaster']) {
+			if (!in_array($value['idAssetMaster'], $collectedCatalogue) && $value['idAssetMaster'])
 				$collectedCatalogue[$value['idAssetMaster']] = $value['productCode'] . ' | ' . $value['assetMasterName'] . ', ' . $value['merk'];
-			}
 		}
 
 		sort($collectedCatalogue);
@@ -62,9 +56,8 @@ class Ajax extends INS_Controller {
 
 		$collectedRooms = [];
 		foreach ($response['data'] as $key => $value) {
-			if (!in_array($value['idLocation'], $collectedRooms) && $value['idLocation']) {
+			if (!in_array($value['idLocation'], $collectedRooms) && $value['idLocation'])
 				$collectedRooms[$value['idLocation']] = env('L_ROOM') . '-' . $value['idLocation'] . ' | ' . $value['locName'];
-			}
 		}
 
 		sort($collectedRooms);

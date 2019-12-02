@@ -12,40 +12,41 @@ class Assets extends INS_Controller {
     public function selectedColumns() {
         if ($this->catCode == env('C_CONTAINER') || inputGet('catCode') == env('C_CONTAINER')) {
             $selectedColumns = array(
-                                        array('column' => 'idAsset', 'alias' => 'ID', 'width' => 10, 'searchable' => FALSE, 'hide' => FALSE),
-                                        array('column' => 'assetParent', 'alias' => 'KODE SISTEM', 'width' => 10, 'searchable' => TRUE, 'hide' => FALSE),
-                                        array('column' => 'assetName', 'alias' => 'NAMA CONTAINER/BOX', 'width' => 30, 'searchable' => TRUE, 'hide' => FALSE),
-                                        array('column' => 'propAdmin.priceBuy', 'alias' => 'HARGA BELI', 'width' => 10, 'searchable' => TRUE, 'hide' => FALSE),
-                                        array('column' => 'propAdmin.procureDate', 'alias' => 'TANGGAL PEROLEHAN', 'width' => 15, 'searchable' => FALSE, 'hide' => FALSE),
-                                        array('column' => 'dummy.containerAvailabilityStatus', 'alias' => 'AVAILABILITY STATUS', 'width' => 15, 'searchable' => FALSE, 'hide' => FALSE),
-                                        array('column' => 'propAdmin.ownershipType', 'alias' => 'KEPEMILIKAN', 'width' => 15, 'searchable' => FALSE, 'hide' => FALSE),
-                                    );
+            	array('column' => 'idAsset', 'alias' => 'ID', 'width' => 10, 'searchable' => FALSE, 'hide' => FALSE),
+				array('column' => 'assetParent', 'alias' => 'KODE SISTEM', 'width' => 10, 'searchable' => TRUE, 'hide' => FALSE),
+				array('column' => 'assetName', 'alias' => 'NAMA CONTAINER/BOX', 'width' => 30, 'searchable' => TRUE, 'hide' => FALSE),
+				array('column' => 'propAdmin.priceBuy', 'alias' => 'HARGA BELI', 'width' => 10, 'searchable' => TRUE, 'hide' => FALSE),
+				array('column' => 'propAdmin.procureDate', 'alias' => 'TANGGAL PEROLEHAN', 'width' => 15, 'searchable' => FALSE, 'hide' => FALSE),
+				array('column' => 'dummy.containerAvailabilityStatus', 'alias' => 'AVAILABILITY STATUS', 'width' => 15, 'searchable' => FALSE, 'hide' => FALSE),
+				array('column' => 'propAdmin.ownershipType', 'alias' => 'KEPEMILIKAN', 'width' => 15, 'searchable' => FALSE, 'hide' => FALSE),
+			);
         } else if ($this->catCode == env('C_PIECE') || inputGet('catCode') == env('C_PIECE')) {
             $selectedColumns = array(
-                                        array('column' => 'idAsset', 'alias' => 'ID', 'width' => 10, 'searchable' => FALSE, 'hide' => FALSE),
-                                        array('column' => 'assetParent', 'alias' => 'KODE SISTEM', 'width' => 10, 'searchable' => TRUE, 'hide' => FALSE),
-                                        array('column' => 'assetName', 'alias' => 'NAMA INSTRUMENT', 'width' => 30, 'searchable' => TRUE, 'hide' => FALSE),
-                                        array('column' => 'dummy.pieceInstrumentSet', 'alias' => 'INSTRUMENT SET', 'width' => 25, 'searchable' => FALSE, 'hide' => FALSE),
-                                        array('column' => 'dummy.pieceInstrumentContainer', 'alias' => 'INSTRUMENT CONTAINER/BOX', 'width' => 25, 'searchable' => FALSE, 'hide' => FALSE),
-                                        array('column' => 'propAdmin.idLocation', 'alias' => 'LOKASI', 'width' => 30, 'searchable' => TRUE, 'hide' => TRUE),
-                                        array('column' => 'propAdmin.condition', 'alias' => 'KONDISI', 'width' => 10, 'searchable' => FALSE, 'hide' => FALSE),
-                                        array('column' => 'propAdmin.status', 'alias' => 'STATUS', 'width' => 10, 'searchable' => FALSE, 'hide' => FALSE),
-                                        array('column' => 'propAdmin.priceBuy', 'alias' => 'HARGA BELI', 'width' => 10, 'searchable' => TRUE, 'hide' => FALSE),
-                                        array('column' => 'propAdmin.procureDate', 'alias' => 'TANGGAL PEROLEHAN', 'width' => 15, 'searchable' => FALSE, 'hide' => FALSE),
-                                    );
+            	array('column' => 'idAsset', 'alias' => 'ID', 'width' => 10, 'searchable' => FALSE, 'hide' => FALSE),
+				array('column' => 'assetParent', 'alias' => 'KODE SISTEM', 'width' => 10, 'searchable' => TRUE, 'hide' => FALSE),
+				array('column' => 'assetName', 'alias' => 'NAMA INSTRUMENT', 'width' => 30, 'searchable' => TRUE, 'hide' => FALSE),
+				array('column' => 'dummy.pieceInstrumentSet', 'alias' => 'INSTRUMENT SET', 'width' => 25, 'searchable' => FALSE, 'hide' => FALSE),
+				array('column' => 'dummy.pieceInstrumentContainer', 'alias' => 'INSTRUMENT CONTAINER/BOX', 'width' => 25, 'searchable' => FALSE, 'hide' => FALSE),
+				array('column' => 'propAdmin.idLocation', 'alias' => 'LOKASI', 'width' => 30, 'searchable' => TRUE, 'hide' => TRUE),
+				array('column' => 'propAdmin.condition', 'alias' => 'KONDISI', 'width' => 10, 'searchable' => FALSE, 'hide' => FALSE),
+				array('column' => 'propAdmin.status', 'alias' => 'STATUS', 'width' => 10, 'searchable' => FALSE, 'hide' => FALSE),
+				array('column' => 'propAdmin.priceBuy', 'alias' => 'HARGA BELI', 'width' => 10, 'searchable' => TRUE, 'hide' => FALSE),
+				array('column' => 'propAdmin.procureDate', 'alias' => 'TANGGAL PEROLEHAN', 'width' => 15, 'searchable' => FALSE, 'hide' => FALSE),
+			);
         } else {
             $selectedColumns = array(
-                                        array('column' => 'idAsset', 'alias' => 'ID', 'width' => 10, 'searchable' => FALSE, 'hide' => FALSE),
-                                        array('column' => 'assetParent', 'alias' => 'KODE SISTEM', 'width' => 10, 'searchable' => TRUE, 'hide' => FALSE),
-                                        array('column' => 'assetName', 'alias' => ($this->catCode == env('C_PIECE') ? 'NAMA INSTRUMENT' : 'NAMA ASET'), 'width' => 30, 'searchable' => TRUE, 'hide' => FALSE),
-										array('column' => 'dummy.setLocation', 'alias' => 'LOKASI', 'width' => 20, 'searchable' => FALSE, 'hide' => FALSE),
-                                        array('column' => 'dummy.setContainer', 'alias' => 'CONTAINER/BOX', 'width' => 30, 'searchable' => FALSE, 'hide' => FALSE),
-                                        array('column' => 'propAdmin.condition', 'alias' => 'KONDISI', 'width' => 10, 'searchable' => FALSE, 'hide' => FALSE),
-                                        array('column' => 'propAdmin.status', 'alias' => 'STATUS', 'width' => 10, 'searchable' => FALSE, 'hide' => FALSE),
-                                        array('column' => 'propAdmin.priceBuy', 'alias' => 'HARGA BELI', 'width' => 10, 'searchable' => TRUE, 'hide' => FALSE),
-                                        array('column' => 'propAdmin.procureDate', 'alias' => 'TANGGAL PEROLEHAN', 'width' => 15, 'searchable' => FALSE, 'hide' => FALSE),
-                                        // array('column' => 'propInstrument.insCategory', 'alias' => 'KATEGORI', 'width' => 20, 'searchable' => FALSE, 'hide' => ($this->catCode == env('C_SET') ? FALSE : TRUE))
-                                    );
+            	array('column' => 'idAsset', 'alias' => 'ID', 'width' => 10, 'searchable' => FALSE, 'hide' => FALSE),
+				array('column' => 'assetParent', 'alias' => 'KODE SISTEM', 'width' => 10, 'searchable' => TRUE, 'hide' => FALSE),
+				array('column' => 'assetName', 'alias' => 'NAMA ASET', 'width' => 30, 'searchable' => TRUE, 'hide' => FALSE),
+				array('column' => 'dummy.setBuilding', 'alias' => 'GEDUNG', 'width' => 20, 'searchable' => FALSE, 'hide' => FALSE),
+				array('column' => 'dummy.setRoom', 'alias' => 'RUANGAN', 'width' => 20, 'searchable' => FALSE, 'hide' => FALSE),
+				array('column' => 'dummy.setContainer', 'alias' => 'CONTAINER/BOX', 'width' => 30, 'searchable' => FALSE, 'hide' => FALSE),
+				array('column' => 'propAdmin.condition', 'alias' => 'KONDISI', 'width' => 10, 'searchable' => FALSE, 'hide' => FALSE),
+				array('column' => 'propAdmin.status', 'alias' => 'STATUS', 'width' => 10, 'searchable' => FALSE, 'hide' => FALSE),
+				array('column' => 'propAdmin.priceBuy', 'alias' => 'HARGA BELI', 'width' => 10, 'searchable' => TRUE, 'hide' => FALSE),
+				array('column' => 'propAdmin.procureDate', 'alias' => 'TANGGAL PEROLEHAN', 'width' => 15, 'searchable' => FALSE, 'hide' => FALSE),
+				// array('column' => 'propInstrument.insCategory', 'alias' => 'KATEGORI', 'width' => 20, 'searchable' => FALSE, 'hide' => ($this->catCode == env('C_SET') ? FALSE : TRUE))
+			);
         }
 
         return $selectedColumns;

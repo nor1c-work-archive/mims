@@ -114,6 +114,12 @@
 					</a>
 					<ul aria-expanded="false" class="collapse first-level">
 						<li class="sidebar-item">
+							<a href="<?= site_url('assets/v/MIC') ?>" class="sidebar-link">
+								<i class="fas fa-open-box"></i>
+								<span class="hide-menu">Container/Box</span>
+							</a>
+						</li>
+						<li class="sidebar-item">
 							<a href="<?= site_url('assets/v/MIS') ?>" class="sidebar-link">
 								<i class="fas fa-box"></i>
 								<span class="hide-menu">Set/Kit</span>
@@ -123,12 +129,6 @@
 							<a href="<?= site_url('assets/v/MIP') ?>" class="sidebar-link">
 								<i class="mdi mdi-content-cut"></i>
 								<span class="hide-menu">Instruments</span>
-							</a>
-						</li>
-						<li class="sidebar-item">
-							<a href="<?= site_url('assets/v/MIC') ?>" class="sidebar-link">
-								<i class="fas fa-open-box"></i>
-								<span class="hide-menu">Container/Box</span>
 							</a>
 						</li>
 					</ul>

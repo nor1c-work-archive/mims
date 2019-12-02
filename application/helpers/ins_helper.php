@@ -359,3 +359,7 @@ function intToMonth($int) {
 
     return $monthList[$int];
 }
+
+function je($data = '') {
+	echo json_encode($data);
+}

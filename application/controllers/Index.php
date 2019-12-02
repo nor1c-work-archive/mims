@@ -19,6 +19,19 @@ class Index extends INS_Controller {
 
         $data['columns']            = $this->selectedColumns;
         $data['searchableColumns']  = $this->searchableColumns;
+        $data['all']				= runAPI('asset/list', 'GET');
+
+        $data['countMIS'] = 0;
+        $data['countMIP'] = 0;
+        $data['countMIC'] = 0;
+        foreach ($data['all']['data'] as $key => $asset) {
+        	if ($asset['catCode'] == env('C_CONTAINER'))
+        		$data['countMIC'] += 1;
+			else if ($asset['catCode'] == env('C_SET'))
+				$data['countMIS'] += 1;
+			else if ($asset['catCode'] == env('C_PIECE'))
+				$data['countMIP'] += 1;
+		}
 
         render($page, $data);
     }
