@@ -114,7 +114,7 @@ class Location extends INS_Controller {
         }
 
 		$result = runAPI($url, 'POST', NULL, $parameters);
-		// echo json_encode([$url, $parameters]); die();
+		// jsonE([$url, $parameters]); die();
 		
         unset($parameters['limit'], $parameters['page']);
         // $allID = runAPI($url, 'POST', NULL, $parameters)['data'];
@@ -135,7 +135,7 @@ class Location extends INS_Controller {
         );
         
         $result = runAPI('location/query', 'POST', NULL, $parameters);
-        echo json_encode($result['data']);
+        jsonE($result['data']);
     }
 
     public function getImage() {
@@ -234,7 +234,7 @@ class Location extends INS_Controller {
             $response = runAPI('location/'.$url, 'POST', NULL, $collectedData);
         }
         
-        echo json_encode($response); die();
+        jsonE($response); die();
     }
 
     public function importPreview() {
@@ -332,7 +332,7 @@ class Location extends INS_Controller {
 
             $note = $inserted . ' data akan diimport, ' . $updated . ' data akan diupdate, dan ' . $ignored . ' data akan diabaikan dari total ' . count($fileData) . ' baris data.';
 
-            echo json_encode(
+            jsonE(
                 array(
                     'header'    => $tableHeader,
                     'data'      => $fileDataOnly,
@@ -347,7 +347,7 @@ class Location extends INS_Controller {
 		$rowsSelected = inputPost('ids');
 
         $response = runAPI('location/delete?idLocation='.$rowsSelected[0], 'POST');
-        echo json_encode($response);
+        jsonE($response);
     }
 
     public function expandableContent() {
@@ -377,7 +377,7 @@ class Location extends INS_Controller {
         }
         $html .= '</table></div>';
         
-        echo json_encode($html);
+        jsonE($html);
     }
 
     function rekap() {
@@ -469,7 +469,7 @@ class Location extends INS_Controller {
         } else if ($mode == 'xlsx')
             rekapExcel($html);
         else
-            echo json_encode($html);
+            jsonE($html);
     }
 
     function generateBarcode($format = 'png', $symbology = 'dmtx', $option = '') {
@@ -638,7 +638,7 @@ class Location extends INS_Controller {
             }
         }
 
-        echo json_encode($collectedMerk);
+        jsonE($collectedMerk);
     }
 
 }

@@ -194,24 +194,12 @@
 					</a>
 
 					<ul aria-expanded="false" class="collapse first-level">
-						<!-- <li class="sidebar-item">
-                            <a href="javascript:void(0)" class="sidebar-link">
-                                <i class="mdi mdi-octagram"></i>
-                                <span class="hide-menu"> Labeling</span>
-                            </a>
-                        </li> -->
 						<li class="sidebar-item">
 							<a href="<?= site_url('tracking/v/MIP') ?>" class="sidebar-link">
 								<i class="fas fa-search"></i>
 								<span class="hide-menu"> Instrument Tracking</span>
 							</a>
 						</li>
-						<!-- <li class="sidebar-item">
-                            <a href="javascript:void(0)" class="sidebar-link">
-                                <i class="mdi mdi-octagram"></i>
-                                <span class="hide-menu"> Instrument Status Updater</span>
-                            </a>
-                        </li> -->
 					</ul>
 				</li>
 
@@ -248,7 +236,7 @@
 							</a>
 						</li>
 					</ul>
-				</li>
+				</li> -->
 
 				<div class="devider"></div>
 
@@ -267,11 +255,11 @@
 								<li class="sidebar-item">
 									<a href="javascript:void(0)" class="sidebar-link">
 										<i class="mdi mdi-octagram"></i>
-										<span class="hide-menu"> Group Setup</span>
+										<span class="hide-menu"> Role Setup</span>
 									</a>
 								</li>
 								<li class="sidebar-item">
-									<a href="javascript:void(0)" class="sidebar-link">
+									<a href="<?=site_url('users')?>" class="sidebar-link">
 										<i class="mdi mdi-octagram"></i>
 										<span class="hide-menu"> User Setup</span>
 									</a>
@@ -285,7 +273,7 @@
 							</a>
 						</li>
 					</ul>
-				</li> -->
+				</li>
 
 			</ul>
 		</nav>

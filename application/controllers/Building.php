@@ -31,7 +31,7 @@ class Building extends INS_Controller {
         $parameters['idUser'] = $pk;
         
         $result = runAPI('users', 'GET', $parameters);
-        echo json_encode($result['data']);
+        jsonE($result['data']);
     }
 
     public function form() {
@@ -45,7 +45,7 @@ class Building extends INS_Controller {
             $response = runAPI('users/create', 'POST', NULL, $data);
         }
 
-        echo json_encode($response);
+        jsonE($response);
     }
 
 }

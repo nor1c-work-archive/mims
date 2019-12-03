@@ -316,5 +316,5 @@ function generateData($selectedColumns = NULL, $result, $deletedKey = NULL) {
         'allID'             => (isset($result['allID']) ? $result['allID'] : ''),
     );
 
-    echo json_encode($finalData);
+    jsonE($finalData);
 }

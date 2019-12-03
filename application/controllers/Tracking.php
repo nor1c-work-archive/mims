@@ -52,7 +52,7 @@ class Tracking extends INS_Controller {
                 $response['box'] = runAPI('asset/query', 'POST', NULL, $boxParameters);
             }
             
-            echo json_encode($response);
+            jsonE($response);
         }
     }
 
@@ -74,7 +74,7 @@ class Tracking extends INS_Controller {
         $allSetPieces = runAPI('asset/query', 'POST', NULL, $allSetPiecesParameters);
 
         // return collected pieces
-        echo json_encode($allSetPieces);
+        jsonE($allSetPieces);
     }
 
 }

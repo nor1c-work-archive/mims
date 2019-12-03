@@ -32,7 +32,7 @@ class Authentication extends INS_Controller {
 
     public function currentToken() {
         $token = ['token' => sessionData('token'), 'refToken' => sessionData('refreshToken')];
-        echo json_encode($token);
+        jsonE($token);
     }
 
 }

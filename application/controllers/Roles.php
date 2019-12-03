@@ -29,7 +29,7 @@ class Roles extends INS_Controller {
         $parameters['idRole'] = $pk;
         
         $result = runAPI('role', 'GET', $parameters);
-        echo json_encode($result['data']);
+        jsonE($result['data']);
     }
 
     public function form() {
@@ -58,7 +58,7 @@ class Roles extends INS_Controller {
         //     $response = runAPI('role/create', 'POST', NULL, $data);
         // }
 
-        // echo json_encode($response);
+        // jsonE($response);
     }
 
 }

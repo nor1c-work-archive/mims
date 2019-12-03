@@ -69,20 +69,29 @@ function initTitle() {
 			break;
 	}
 
-	switch (uriSegment(3)) {
-		case env('C_PIECE'):
+	if (uriSegment(3)) {
+		switch (uriSegment(3)) {
+			case env('C_PIECE'):
 				$pageTitle = $mainPage . ' Instrument';
-			break;
-		case env('C_SET'):
+				break;
+			case env('C_SET'):
 				$pageTitle = $mainPage . ' Instrument Set/Kit';
-			break;
-		case env('C_CONTAINER'):
+				break;
+			case env('C_CONTAINER'):
 				$pageTitle = $mainPage . ' Container/Box';
-			break;
-		case env('URL_BUILDING'):
+				break;
+			case env('URL_BUILDING'):
 				$pageTitle = $mainPage . ' Building';
-			break;
+				break;
+		}
+	} else {
+		switch (uriSegment(1)) {
+			case 'users':
+				$pageTitle = $mainPage . ' User Setup';
+				break;
+		}
 	}
+
 	$data['pageTitle'] = $pageTitle;
 	$data['title'] = ($pageTitle ? $pageTitle . ' | ' : '') .  env('APP_NAME') . ' v' . env('APP_VER');
 
@@ -95,15 +104,19 @@ function initWebTrack($pageTitle) {
 								<li class="breadcrumb-item"><a href="'.site_url().'">Home</a></li>';
 	switch (uriSegment(1)) {
 		case 'master':
-				$data['webTrack'] .= '<li class="breadcrumb-item">Catalogue</li>';
+			$data['webTrack'] .= '<li class="breadcrumb-item">Catalogue</li>';
 			break;
 		
 		case 'assets':
-				$data['webTrack'] .= '<li class="breadcrumb-item">Inventory</li>';
+			$data['webTrack'] .= '<li class="breadcrumb-item">Inventory</li>';
 			break;
 
 		case 'location':
-				$data['webTrack'] .= '<li class="breadcrumb-item">Location</li>';
+			$data['webTrack'] .= '<li class="breadcrumb-item">Location</li>';
+			break;
+
+		case 'users':
+			$data['webTrack'] .= '<li class="breadcrumb-item">Access Control</li>';
 			break;
 	}
 	$data['webTrack'] .= 		'<li class="breadcrumb-item" style="font-weight:bold;color:#2cabe3;">'.$pageTitle.'</li>';
@@ -229,7 +242,7 @@ function rekapPdf($html = '', $filename = 'Rekap PDF', $paperSize = 'A4', $orien
 
     $data['filename'] = $filename;
 
-    echo json_encode($data);
+    jsonE($data);
 }
 
 function input($type = NULL, $title = '', $id = '', $inputName = '', $classes = '', $size = '4', $additionalHtml = '', $defaultOption = '-', $options = NULL, $selectedOption = NULL) {
@@ -242,6 +255,24 @@ function input($type = NULL, $title = '', $id = '', $inputName = '', $classes = 
                             </div>
                         </div>';
             break;
+
+		case 'email':
+			$html = '<div class="form-group row align-items-center mb-0">
+                            <label class="col-3 control-label col-form-label">'.$title.'</label>
+                            <div class="col-'.$size.' border-left pb-2 pt-2">
+                                <input id="'.$id.'" type="email" class="form-control '.$classes.'" name="'.$inputName.'" '.$additionalHtml.'>
+                            </div>
+                        </div>';
+			break;
+
+		case 'number':
+			$html = '<div class="form-group row align-items-center mb-0">
+                            <label class="col-3 control-label col-form-label">'.$title.'</label>
+                            <div class="col-'.$size.' border-left pb-2 pt-2">
+                                <input id="'.$id.'" type="number" class="form-control '.$classes.'" name="'.$inputName.'" '.$additionalHtml.'>
+                            </div>
+                        </div>';
+			break;
 
         case 'textarea':
                 $html = '<div class="form-group row align-items-center mb-0">
@@ -360,6 +391,6 @@ function intToMonth($int) {
     return $monthList[$int];
 }
 
-function je($data = '') {
+function jsonE($data = '') {
 	echo json_encode($data);
 }

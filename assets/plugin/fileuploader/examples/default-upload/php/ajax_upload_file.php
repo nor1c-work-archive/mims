@@ -10,5 +10,5 @@
     $data = $FileUploader->upload();
 
 	// export to js
-	echo json_encode($data);
+	je($data);
 	exit;

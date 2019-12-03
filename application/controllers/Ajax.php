@@ -16,7 +16,7 @@ class Ajax extends INS_Controller {
 		}
 
 		sort($collectedCategory);
-		echo json_encode($collectedCategory);
+		jsonE($collectedCategory);
 	}
 
 	public function merk() {
@@ -29,7 +29,7 @@ class Ajax extends INS_Controller {
 		}
 
 		sort($collectedMerk);
-		echo json_encode($collectedMerk);
+		jsonE($collectedMerk);
 	}
 
 	public function catalogue() {
@@ -46,7 +46,7 @@ class Ajax extends INS_Controller {
 		}
 
 		sort($collectedCatalogue);
-		echo json_encode($collectedCatalogue);
+		jsonE($collectedCatalogue);
 	}
 
 	public function room() {
@@ -61,7 +61,7 @@ class Ajax extends INS_Controller {
 		}
 
 		sort($collectedRooms);
-		echo json_encode($collectedRooms);
+		jsonE($collectedRooms);
 	}
 
 }

@@ -2,11 +2,8 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 $route['default_controller'] = 'index';
-$route['404_override'] = '';
+$route['404_override'] = 'handler/page_404';
 $route['translate_uri_dashes'] = FALSE;
-
-$route['dummy_data'] = 'Index/dummy_data';
-$route['pickSomethingDummy'] = 'Index/pickSomethingDummy';
 
 $route['assets/v/(:any)'] = 'assets';
 $route['assets/form/(:any)'] = 'assets/form';

@@ -5,14 +5,14 @@ class Master extends INS_Controller {
     public function __construct() {
         parent::__construct();
         $this->catCode              = uriSegment(3);
-        $this->totalUnusedColumn    = 2;
+        $this->totalUnusedColumn	= 2;
         $this->selectedColumns      = [
-                                        ['column' => 'idAssetMaster', 'alias' => 'ID', 'width' => 5, 'searchable' => FALSE, 'hide' => FALSE],
-                                        ['column' => 'catCode', 'alias' => 'KODE SISTEM', 'width' => 8, 'searchable' => TRUE, 'hide' => FALSE, 'replaceOrder' => 'idAssetMaster'],
-                                        ['column' => 'productCode', 'alias' => 'KODE KATALOG', 'width' => 10, 'searchable' => TRUE, 'hide' => ($this->catCode == env('C_SET') ? TRUE : FALSE)],
-                                        ['column' => 'assetMasterName', 'alias' => 'NAMA KATALOG', 'width' => 40, 'searchable' => TRUE, 'hide' => FALSE],
-                                        ['column' => 'merk', 'alias' => 'MERK', 'width' => 15, 'searchable' => TRUE, 'hide' => ($this->catCode == env('C_SET') ? TRUE : FALSE)],
-									  ];
+        	['column' => 'idAssetMaster', 'alias' => 'ID', 'width' => 5, 'searchable' => FALSE, 'hide' => FALSE],
+			['column' => 'catCode', 'alias' => 'KODE SISTEM', 'width' => 8, 'searchable' => TRUE, 'hide' => FALSE, 'replaceOrder' => 'idAssetMaster'],
+			['column' => 'productCode', 'alias' => 'KODE KATALOG', 'width' => 10, 'searchable' => TRUE, 'hide' => ($this->catCode == env('C_SET') ? TRUE : FALSE)],
+			['column' => 'assetMasterName', 'alias' => 'NAMA KATALOG', 'width' => 40, 'searchable' => TRUE, 'hide' => FALSE],
+			['column' => 'merk', 'alias' => 'MERK', 'width' => 15, 'searchable' => TRUE, 'hide' => ($this->catCode == env('C_SET') ? TRUE : FALSE)],
+		];
     }
 
     public function index() {
@@ -130,7 +130,7 @@ class Master extends INS_Controller {
 		];
         
         $result = runAPI('asset/masterquery', 'POST', NULL, $parameters);
-        echo json_encode($result['data']);
+        jsonE($result['data']);
     }
 
     public function getImage() {
@@ -240,7 +240,7 @@ class Master extends INS_Controller {
             $response = runAPI('asset/'.$url, 'POST', NULL, $collectedData);
         }
         
-        echo json_encode($response); die();
+        jsonE($response); die();
     }
 
     public function importPreview() {
@@ -338,7 +338,7 @@ class Master extends INS_Controller {
 
             $note = $inserted . ' data akan diimport, ' . $updated . ' data akan diupdate, dan ' . $ignored . ' data akan diabaikan dari total ' . count($fileData) . ' baris data.';
 
-            echo json_encode([
+            jsonE([
                 'header'    => $tableHeader,
                 'data'      => $fileDataOnly,
                 'raw'       => $finalData,
@@ -351,7 +351,7 @@ class Master extends INS_Controller {
         $rowsSelected = inputPost('ids');
 
         $response = runAPI('asset/masterdelete', 'POST', NULL, $rowsSelected);
-        echo json_encode($response);
+        jsonE($response);
     }
 
     public function expandableContent() {
@@ -381,7 +381,7 @@ class Master extends INS_Controller {
         }
         $html .= '</table></div>';
         
-        echo json_encode($html);
+        jsonE($html);
     }
 
     function rekap() {
@@ -473,7 +473,7 @@ class Master extends INS_Controller {
         } else if ($mode == 'xlsx')
             rekapExcel($html);
         else
-            echo json_encode($html);
+            jsonE($html);
     }
 
     function generateBarcode($format = 'png', $symbology = 'dmtx', $option = '') {
@@ -642,7 +642,7 @@ class Master extends INS_Controller {
             }
         }
 
-        echo json_encode($collectedMerk);
+        jsonE($collectedMerk);
     }
 
 }

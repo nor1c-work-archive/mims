@@ -11,42 +11,42 @@ class Assets extends INS_Controller {
 
     public function selectedColumns() {
         if ($this->catCode == env('C_CONTAINER') || inputGet('catCode') == env('C_CONTAINER')) {
-            $selectedColumns = array(
-            	array('column' => 'idAsset', 'alias' => 'ID', 'width' => 10, 'searchable' => FALSE, 'hide' => FALSE),
-				array('column' => 'assetParent', 'alias' => 'KODE SISTEM', 'width' => 10, 'searchable' => TRUE, 'hide' => FALSE),
-				array('column' => 'assetName', 'alias' => 'NAMA CONTAINER/BOX', 'width' => 30, 'searchable' => TRUE, 'hide' => FALSE),
-				array('column' => 'propAdmin.priceBuy', 'alias' => 'HARGA BELI', 'width' => 10, 'searchable' => TRUE, 'hide' => FALSE),
-				array('column' => 'propAdmin.procureDate', 'alias' => 'TANGGAL PEROLEHAN', 'width' => 15, 'searchable' => FALSE, 'hide' => FALSE),
-				array('column' => 'dummy.containerAvailabilityStatus', 'alias' => 'AVAILABILITY STATUS', 'width' => 15, 'searchable' => FALSE, 'hide' => FALSE),
-				array('column' => 'propAdmin.ownershipType', 'alias' => 'KEPEMILIKAN', 'width' => 15, 'searchable' => FALSE, 'hide' => FALSE),
-			);
+            $selectedColumns = [
+            	['column' => 'idAsset', 'alias' => 'ID', 'width' => 1, 'searchable' => FALSE, 'hide' => FALSE],
+				['column' => 'assetParent', 'alias' => 'KODE SISTEM', 'width' => 10, 'searchable' => TRUE, 'hide' => FALSE],
+				['column' => 'assetName', 'alias' => 'NAMA CONTAINER/BOX', 'width' => 30, 'searchable' => TRUE, 'hide' => FALSE],
+				['column' => 'propAdmin.priceBuy', 'alias' => 'HARGA BELI', 'width' => 10, 'searchable' => TRUE, 'hide' => FALSE],
+				['column' => 'propAdmin.procureDate', 'alias' => 'TANGGAL PEROLEHAN', 'width' => 15, 'searchable' => FALSE, 'hide' => FALSE],
+				['column' => 'dummy.containerAvailabilityStatus', 'alias' => 'AVAILABILITY STATUS', 'width' => 15, 'searchable' => FALSE, 'hide' => FALSE],
+				['column' => 'propAdmin.ownershipType', 'alias' => 'KEPEMILIKAN', 'width' => 15, 'searchable' => FALSE, 'hide' => FALSE],
+			];
         } else if ($this->catCode == env('C_PIECE') || inputGet('catCode') == env('C_PIECE')) {
-            $selectedColumns = array(
-            	array('column' => 'idAsset', 'alias' => 'ID', 'width' => 10, 'searchable' => FALSE, 'hide' => FALSE),
-				array('column' => 'assetParent', 'alias' => 'KODE SISTEM', 'width' => 10, 'searchable' => TRUE, 'hide' => FALSE),
-				array('column' => 'assetName', 'alias' => 'NAMA INSTRUMENT', 'width' => 30, 'searchable' => TRUE, 'hide' => FALSE),
-				array('column' => 'dummy.pieceInstrumentSet', 'alias' => 'INSTRUMENT SET', 'width' => 25, 'searchable' => FALSE, 'hide' => FALSE),
-				array('column' => 'dummy.pieceInstrumentContainer', 'alias' => 'INSTRUMENT CONTAINER/BOX', 'width' => 25, 'searchable' => FALSE, 'hide' => FALSE),
-				array('column' => 'propAdmin.idLocation', 'alias' => 'LOKASI', 'width' => 30, 'searchable' => TRUE, 'hide' => TRUE),
-				array('column' => 'propAdmin.condition', 'alias' => 'KONDISI', 'width' => 10, 'searchable' => FALSE, 'hide' => FALSE),
-				array('column' => 'propAdmin.status', 'alias' => 'STATUS', 'width' => 10, 'searchable' => FALSE, 'hide' => FALSE),
-				array('column' => 'propAdmin.priceBuy', 'alias' => 'HARGA BELI', 'width' => 10, 'searchable' => TRUE, 'hide' => FALSE),
-				array('column' => 'propAdmin.procureDate', 'alias' => 'TANGGAL PEROLEHAN', 'width' => 15, 'searchable' => FALSE, 'hide' => FALSE),
-			);
+            $selectedColumns = [
+            	['column' => 'idAsset', 'alias' => 'ID', 'width' => 1, 'searchable' => FALSE, 'hide' => FALSE],
+				['column' => 'assetParent', 'alias' => 'KODE SISTEM', 'width' => 10, 'searchable' => TRUE, 'hide' => FALSE],
+				['column' => 'assetName', 'alias' => 'NAMA INSTRUMENT', 'width' => 30, 'searchable' => TRUE, 'hide' => FALSE],
+				['column' => 'dummy.pieceInstrumentSet', 'alias' => 'INSTRUMENT SET', 'width' => 25, 'searchable' => FALSE, 'hide' => FALSE],
+				['column' => 'dummy.pieceInstrumentContainer', 'alias' => 'INSTRUMENT CONTAINER/BOX', 'width' => 25, 'searchable' => FALSE, 'hide' => FALSE],
+				['column' => 'propAdmin.idLocation', 'alias' => 'LOKASI', 'width' => 30, 'searchable' => TRUE, 'hide' => TRUE],
+				['column' => 'propAdmin.condition', 'alias' => 'KONDISI', 'width' => 10, 'searchable' => FALSE, 'hide' => FALSE],
+				['column' => 'propAdmin.status', 'alias' => 'STATUS', 'width' => 10, 'searchable' => FALSE, 'hide' => FALSE],
+				['column' => 'propAdmin.priceBuy', 'alias' => 'HARGA BELI', 'width' => 10, 'searchable' => TRUE, 'hide' => FALSE],
+				['column' => 'propAdmin.procureDate', 'alias' => 'TANGGAL PEROLEHAN', 'width' => 15, 'searchable' => FALSE, 'hide' => FALSE],
+			];
         } else {
-            $selectedColumns = array(
-            	array('column' => 'idAsset', 'alias' => 'ID', 'width' => 10, 'searchable' => FALSE, 'hide' => FALSE),
-				array('column' => 'assetParent', 'alias' => 'KODE SISTEM', 'width' => 10, 'searchable' => TRUE, 'hide' => FALSE),
-				array('column' => 'assetName', 'alias' => 'NAMA ASET', 'width' => 30, 'searchable' => TRUE, 'hide' => FALSE),
-				array('column' => 'dummy.setBuilding', 'alias' => 'GEDUNG', 'width' => 20, 'searchable' => FALSE, 'hide' => FALSE),
-				array('column' => 'dummy.setRoom', 'alias' => 'RUANGAN', 'width' => 20, 'searchable' => FALSE, 'hide' => FALSE),
-				array('column' => 'dummy.setContainer', 'alias' => 'CONTAINER/BOX', 'width' => 30, 'searchable' => FALSE, 'hide' => FALSE),
-				array('column' => 'propAdmin.condition', 'alias' => 'KONDISI', 'width' => 10, 'searchable' => FALSE, 'hide' => FALSE),
-				array('column' => 'propAdmin.status', 'alias' => 'STATUS', 'width' => 10, 'searchable' => FALSE, 'hide' => FALSE),
-				array('column' => 'propAdmin.priceBuy', 'alias' => 'HARGA BELI', 'width' => 10, 'searchable' => TRUE, 'hide' => FALSE),
-				array('column' => 'propAdmin.procureDate', 'alias' => 'TANGGAL PEROLEHAN', 'width' => 15, 'searchable' => FALSE, 'hide' => FALSE),
-				// array('column' => 'propInstrument.insCategory', 'alias' => 'KATEGORI', 'width' => 20, 'searchable' => FALSE, 'hide' => ($this->catCode == env('C_SET') ? FALSE : TRUE))
-			);
+            $selectedColumns = [
+            	['column' => 'idAsset', 'alias' => 'ID', 'width' => 1, 'searchable' => FALSE, 'hide' => FALSE],
+				['column' => 'assetParent', 'alias' => 'KODE SISTEM', 'width' => 10, 'searchable' => TRUE, 'hide' => FALSE],
+				['column' => 'assetName', 'alias' => 'NAMA ASET', 'width' => 30, 'searchable' => TRUE, 'hide' => FALSE],
+				['column' => 'dummy.setBuilding', 'alias' => 'GEDUNG', 'width' => 20, 'searchable' => FALSE, 'hide' => FALSE],
+				['column' => 'dummy.setRoom', 'alias' => 'RUANGAN', 'width' => 20, 'searchable' => TRUE, 'hide' => FALSE],
+				['column' => 'dummy.setContainer', 'alias' => 'CONTAINER/BOX', 'width' => 30, 'searchable' => FALSE, 'hide' => FALSE],
+				['column' => 'propAdmin.condition', 'alias' => 'KONDISI', 'width' => 10, 'searchable' => FALSE, 'hide' => FALSE],
+				['column' => 'propAdmin.status', 'alias' => 'STATUS', 'width' => 10, 'searchable' => FALSE, 'hide' => FALSE],
+				['column' => 'propAdmin.priceBuy', 'alias' => 'HARGA BELI', 'width' => 10, 'searchable' => TRUE, 'hide' => FALSE],
+				['column' => 'propAdmin.procureDate', 'alias' => 'TANGGAL PEROLEHAN', 'width' => 15, 'searchable' => FALSE, 'hide' => FALSE],
+				// ['column' => 'propInstrument.insCategory', 'alias' => 'KATEGORI', 'width' => 20, 'searchable' => FALSE, 'hide' => ($this->catCode == env('C_SET') ? FALSE : TRUE)]
+			];
         }
 
         return $selectedColumns;
@@ -54,7 +54,7 @@ class Assets extends INS_Controller {
 
     public function index() {
         $data['customDatatable']    = TRUE;
-        $data['columnDefinition']   = array($this->selectedColumns(), $this->totalUnusedColumn);
+        $data['columnDefinition']   = [$this->selectedColumns(), $this->totalUnusedColumn];
         $data['withExtraFilter']    = TRUE;
         $data['withFilterMode']     = TRUE;
 
@@ -68,7 +68,7 @@ class Assets extends INS_Controller {
         if (inputGet('query')) {
             $query = explode('&', inputGet('query'));
 
-            $collectedQuery = array();
+            $collectedQuery = [];
             foreach ($query as $queryKey => $queryValue) {
                 $key = explode('=', $queryValue)[0];
                 $value = explode('=', $queryValue)[1];
@@ -93,7 +93,7 @@ class Assets extends INS_Controller {
             parse_str($filters, $filters);
         }
 
-        $parameters['directFilters'] = array();
+        $parameters['directFilters'] = [];
 
         if (isset($filters) && !empty($filters)) {
 			// simple filters
@@ -109,10 +109,10 @@ class Assets extends INS_Controller {
 							}
 						}
 					} else {
-                        $parameters['directFilters']['LIKEAND'][] = array(
+                        $parameters['directFilters']['LIKEAND'][] = [
                             "column" => ($filters['searchField1'] == 'assetParent' ? 'idAsset' : $filters['searchField1']),
                             "value" => ($filters['searchField1'] == 'assetParent' ? str_replace(inputGet('catCode').'-', '', $filters['searchKeyword1']) : $filters['searchKeyword1'])
-						);
+						];
 					}
 				}
 				// check second search field
@@ -126,56 +126,49 @@ class Assets extends INS_Controller {
 							}
 						}
 					} else {
-                        $parameters['directFilters']['LIKEAND'][] = array(
+                        $parameters['directFilters']['LIKEAND'][] = [
                             "column" => ($filters['searchField2'] == 'assetParent' ? 'idAsset' : $filters['searchField2']),
                             "value" => ($filters['searchField1'] == 'assetParent' ? str_replace(inputGet('catCode').'-', '', $filters['searchKeyword2']) : $filters['searchKeyword2'])
-                        );
+                        ];
                     }
 				}
-                // if ($filters['searchInsCategory'] != '') {
-                //     $parameters['directFilters']['EXACTOR'][] = array(
-                //         "column" => 'insCategory',
-                //         "value" => $filters['searchInsCategory']
-                //     );
-                // }
             } else {
 				// advanced filters
                 foreach ($filters as $paramKey => $paramValue) {
                     if (isset($paramValue['value']) && $paramValue['value'] != '') {
-                        if (in_array($paramValue['name'], array('firstProcureDate', 'lastProcureDate'))) {
-                            $parameters['directFilters']['BETWEEN'][] = array(
+                        if (in_array($paramValue['name'], ['firstProcureDate', 'lastProcureDate'])) {
+                            $parameters['directFilters']['BETWEEN'][] = [
                                 "column" => "createDate",
                                 "value" => date('Y-m-d', strtotime(str_replace('/', '-', $paramValue['value'])))
-                            );
+                            ];
                         } else if ($paramValue['name'] == 'idAssetMaster') {
-                            $parameters['directFilters']['LIKEAND'][] = array(
+                            $parameters['directFilters']['LIKEAND'][] = [
                                 "column" => 'idAsset',
                                 "value" => ltrim(str_replace($parameters['additional']['catCode'].'-', '', $paramValue['value']), '0')
-                            );
+                            ];
                         } else if ($paramValue['name'] == 'priceBuy') {
-                            $parameters['directFilters']['LIKEAND'][] = array(
+                            $parameters['directFilters']['LIKEAND'][] = [
                                 "column" => $paramValue['name'],
                                 "value" => str_replace('.', '', $paramValue['value'])
-                            );
+                            ];
                         } else if ($paramValue['name'] == 'status') {
-                            $parameters['directFilters']['EXACTOR'][] = array(
+                            $parameters['directFilters']['EXACTOR'][] = [
                                 "column" => $paramValue['name'],
                                 "value" => $paramValue['value']
-                            );
+                            ];
                         } else {
-                            $parameters['directFilters']['LIKEAND'][] = array(
+                            $parameters['directFilters']['LIKEAND'][] = [
                                 "column" => $paramValue['name'],
                                 "value" => $paramValue['value']
-                            );
+                            ];
                         }
                     }
                 }
             }
         }
 
-        if (isset($parameters['search']) && $parameters['search'] != '') {
+        if (isset($parameters['search']) && $parameters['search'] != '')
             $url = 'asset/query';
-        }
 
         $result = runAPI($url, 'POST', NULL, $parameters);
 
@@ -186,45 +179,45 @@ class Assets extends INS_Controller {
         $pk = inputGet('id');
 
         // get set detail
-        $parameters['directFilters']['EXACTOR'][] = array(
+        $parameters['directFilters']['EXACTOR'][] = [
             'column' => 'idAsset',
             'value' => $pk
-        );
+        ];
         $result['set'] = runAPI('asset/query', 'POST', NULL, $parameters);
 
         if ($result['set']['data'][0]['assetParent']) {
-            $parameters['directFilters']['EXACTOR'][] = array(
+            $parameters['directFilters']['EXACTOR'][] = [
                 'column' => 'idAsset',
                 'value' => $result['set']['data'][0]['assetParent']
-            );
+            ];
             $result['parent'] = runAPI('asset/query', 'POST', NULL, $parameters);
             
-            $setCatalogueParameters['directFilters']['EXACTOR'][] = array(
+            $setCatalogueParameters['directFilters']['EXACTOR'][] = [
                 'column' => 'idAssetMaster',
                 'value' => $result['parent']['data'][0]['idAssetMaster']
-            );
+            ];
             $result['parentCatalogue'] = runAPI('asset/masterquery', 'POST', NULL, $setCatalogueParameters);
         }
 
         // set catalogue
-        $pieceCatalogueParameters['directFilters']['EXACTOR'][] = array(
+        $pieceCatalogueParameters['directFilters']['EXACTOR'][] = [
             'column' => 'idAssetMaster',
             'value' => $result['set']['data'][0]['idAssetMaster']
-        );
+        ];
         $result['setCatalogue'] = runAPI('asset/masterquery', 'POST', NULL, $pieceCatalogueParameters);
 
         // get set pieces
-        $pieceParameters['directFilters']['EXACTOR'][] = array(
+        $pieceParameters['directFilters']['EXACTOR'][] = [
             'column' => 'assetParent',
             'value' => $pk
-        );
+        ];
         $result['pieces'] = runAPI('asset/query', 'POST', NULL, $pieceParameters);
 
-        echo json_encode($result);
+        jsonE($result);
     }
 
     public function form() {
-        $pk = (!in_array(inputPost('isPiece'), array('1')) ? inputPost('asset')[1]['idAsset'] : '');
+        $pk = (!in_array(inputPost('isPiece'), ['1']) ? inputPost('asset')[1]['idAsset'] : '');
         $data = inputPost();
 
         $importMode = FALSE;
@@ -237,72 +230,71 @@ class Assets extends INS_Controller {
                 $qty = (isset($assetValue['quantity']) ? $assetValue['quantity'] : 1);
                 for ($i=1; $i <= $qty; $i++) { // kalau langsung input piece
 
-                    $assetNameParameters = array();
-                    $assetNameParameters['directFilters']['EXACTOR'][] = array(
+                    $assetNameParameters['directFilters']['EXACTOR'][] = [
                         'column' => 'idAssetMaster',
                         'value' => $assetValue['idAssetMaster']
-                    );
+                    ];
 
                     $assetName[$i] = runAPI('asset/masterquery', 'POST', NULL, $assetNameParameters);
 
-                    $set[] = array(
-                        'idAsset' => ($pk ? $assetValue['idAsset'] : 0),
-                        'qrCode' => isset($assetValue['qrCode']) ? emptyDefault($assetValue['qrCode']) : '',
-                        'catCode' => $assetValue['catCode'],
-                        'idAssetMaster' => isset($assetValue['idAssetMaster']) ? zeroDefault($assetValue['idAssetMaster']) : 0,
-                        'assetParent' => isset($assetValue['assetParent']) ? (strpos('MIC', $assetValue['assetParent']) !== TRUE ? str_replace('MIC-','',explode('|',$assetValue['assetParent'])[0]) : zeroDefault($assetValue['assetParent'])) : 0,
-                        'assetName' => (isset($assetValue['assetName']) ? $assetValue['assetName'] : $assetName[$i]['data'][0]['assetMasterName']),
-                        'assetDesc' => isset($assetValue['assetDesc']) ? emptyDefault($assetValue['assetDesc']) : '',
-                        'hasPropAdmin' => true,
-                        'hasPropFile' => true,
+                    $set[] = [
+                        'idAsset' 			=> ($pk ? $assetValue['idAsset'] : 0),
+                        'qrCode' 			=> isset($assetValue['qrCode']) ? emptyDefault($assetValue['qrCode']) : '',
+                        'catCode' 			=> $assetValue['catCode'],
+                        'idAssetMaster' 	=> isset($assetValue['idAssetMaster']) ? zeroDefault($assetValue['idAssetMaster']) : 0,
+                        'assetParent'		=> isset($assetValue['assetParent']) ? (strpos('MIC', $assetValue['assetParent']) !== TRUE ? str_replace('MIC-','',explode('|',$assetValue['assetParent'])[0]) : zeroDefault($assetValue['assetParent'])) : 0,
+                        'assetName' 		=> (isset($assetValue['assetName']) ? $assetValue['assetName'] : $assetName[$i]['data'][0]['assetMasterName']),
+                        'assetDesc' 		=> isset($assetValue['assetDesc']) ? emptyDefault($assetValue['assetDesc']) : '',
+                        'hasPropAdmin' 		=> true,
+                        'hasPropFile' 		=> true,
                         'hasPropInstrument' => true,
-                        'hasPropTax' => true,
-                        'propAdmin' => array(
-                            'idAsset' => ($pk ? $assetValue['idAsset'] : 0),
-                            'idLocation' => isset($assetValue['idLocation']) ? zeroDefault($assetValue['idLocation']) : 0,
-                            'riskLevel' => isset($assetValue['riskLevel']) ? emptyDefault($assetValue['riskLevel']) : '',
-                            'ownershipType' => isset($assetValue['ownershipType']) ? emptyDefault($assetValue['ownershipType']) : '',
-                            'condition' => isset($assetValue['condition']) ? emptyDefault($assetValue['condition']) : '',
-                            'status' => isset($assetValue['status']) ? emptyDefault($assetValue['status']) : '',
-                            'inactive_date' => isset($assetValue['inactive_date']) ? emptyDefault($assetValue['inactive_date']) : '',
-                            'yearProcurement' => ($assetValue['procureDate'] ? date('Y', strtotime(str_replace('/', '-', $assetValue['procureDate']))) : NULL),
-                            'procureDate' => ($assetValue['procureDate'] ? date('Y-m-d', strtotime(str_replace('/', '-', $assetValue['procureDate']))) : NULL),
-                            'receivedDate' => isset($assetValue['receivedDate']) ? emptyDefault($assetValue['receivedDate']) : '',
-                            'reff' => isset($assetValue['reff']) ? emptyDefault($assetValue['reff']) : '',
-                            'poNumb' => isset($assetValue['poNumb']) ? emptyDefault($assetValue['poNumb']) : '',
-                            'priceBuy' => ($assetValue['priceBuy'] ? str_replace('.', '', $assetValue['priceBuy']) : 0),
-                            'depreciationMode' => isset($assetValue['depreciationMode']) ? emptyDefault($assetValue['depreciationMode']) : '',
-                            'keterangan' => isset($assetValue['keterangan']) ? emptyDefault($assetValue['keterangan']) : '',
-                        ),
-                        'propFiles' => array(
+                        'hasPropTax' 		=> true,
+                        'propAdmin' 		=> [
+                            'idAsset' 			=> ($pk ? $assetValue['idAsset'] : 0),
+                            'idLocation' 		=> isset($assetValue['idLocation']) ? zeroDefault($assetValue['idLocation']) : 0,
+                            'riskLevel' 		=> isset($assetValue['riskLevel']) ? emptyDefault($assetValue['riskLevel']) : '',
+                            'ownershipType' 	=> isset($assetValue['ownershipType']) ? emptyDefault($assetValue['ownershipType']) : '',
+                            'condition' 		=> isset($assetValue['condition']) ? emptyDefault($assetValue['condition']) : '',
+                            'status' 			=> isset($assetValue['status']) ? emptyDefault($assetValue['status']) : '',
+                            'inactive_date' 	=> isset($assetValue['inactive_date']) ? emptyDefault($assetValue['inactive_date']) : '',
+                            'yearProcurement' 	=> ($assetValue['procureDate'] ? date('Y', strtotime(str_replace('/', '-', $assetValue['procureDate']))) : NULL),
+                            'procureDate' 		=> ($assetValue['procureDate'] ? date('Y-m-d', strtotime(str_replace('/', '-', $assetValue['procureDate']))) : NULL),
+                            'receivedDate' 		=> isset($assetValue['receivedDate']) ? emptyDefault($assetValue['receivedDate']) : '',
+                            'reff' 				=> isset($assetValue['reff']) ? emptyDefault($assetValue['reff']) : '',
+                            'poNumb' 			=> isset($assetValue['poNumb']) ? emptyDefault($assetValue['poNumb']) : '',
+                            'priceBuy' 			=> ($assetValue['priceBuy'] ? str_replace('.', '', $assetValue['priceBuy']) : 0),
+                            'depreciationMode' 	=> isset($assetValue['depreciationMode']) ? emptyDefault($assetValue['depreciationMode']) : '',
+                            'keterangan' 		=> isset($assetValue['keterangan']) ? emptyDefault($assetValue['keterangan']) : '',
+                        ],
+                        'propFiles' => [
                             // array(
                             //     'idAsset' => ($pk ? $assetValue['idAsset'] : 0),
                             //     'idFile' => isset($assetValue['idFile']) ? zeroDefault($assetValue['idFile']) : 0,
                             //     'propFileName' => isset($assetValue['propFileName']) ? emptyDefault($assetValue['propFileName']) : '',
                             //     'propFileDesc' => isset($assetValue['propFileDesc']) ? emptyDefault($assetValue['propFileDesc']) : '',
                             // ),
-                        ),
-                        'propInstrument' => array(
-                            'idAsset' => ($pk ? $assetValue['idAsset'] : 0),
-                            'insCategory' => isset($assetValue['insCategory']) ? emptyDefault($assetValue['insCategory']) : '',
-                            'insStatus' => isset($assetValue['insStatus']) ? emptyDefault($assetValue['insStatus']) : '',
-                            'merk' => isset($assetValue['merk']) ? emptyDefault($assetValue['merk']) : '',
-                            'isSet' => true,
-                        ),
-                        'propTax' => array(
-                            'idAsset' => ($pk ? $assetValue['idAsset'] : 0),
-                            'taxCategory' => isset($assetValue['taxCategory']) ? emptyDefault($assetValue['taxCategory']) : '',
-                            'expectedLifeTime' => isset($assetValue['expectedLifeTime']) ? zeroDefault($assetValue['expectedLifeTime']) : 0,
-                            'lifeTimeUnit' => isset($assetValue['lifeTimeUnit']) ? emptyDefault($assetValue['lifeTimeUnit']) : '',
-                            'cost' => isset($assetValue['cost']) ? zeroDefault($assetValue['cost']) : 0,
-                            'residuVal' => isset($assetValue['residuVal']) ? zeroDefault($assetValue['residuVal']) : 0,
-                            'bookVal' => isset($assetValue['bookVal']) ? zeroDefault($assetValue['bookVal']) : 0,
-                            'currentLifeTime' => isset($assetValue['currentLifeTime']) ? zeroDefault($assetValue['currentLifeTime']) : 0,
-                            'percentLifeTime' => isset($assetValue['percentLifeTime']) ? zeroDefault($assetValue['percentLifeTime']) : 0,
-                            'presentDate' => isset($assetValue['presentDate']) ? emptyDefault($assetValue['presentDate']) : '',
-                            'calcStart' => isset($assetValue['calcStart']) ? emptyDefault($assetValue['calcStart']) : '',
-                        ),
-                    );
+                        ],
+                        'propInstrument' => [
+                            'idAsset' 		=> ($pk ? $assetValue['idAsset'] : 0),
+                            'insCategory' 	=> isset($assetValue['insCategory']) ? emptyDefault($assetValue['insCategory']) : '',
+                            'insStatus' 	=> isset($assetValue['insStatus']) ? emptyDefault($assetValue['insStatus']) : '',
+                            'merk' 			=> isset($assetValue['merk']) ? emptyDefault($assetValue['merk']) : '',
+                            'isSet' 		=> true,
+                        ],
+                        'propTax' => [
+                            'idAsset' 			=> ($pk ? $assetValue['idAsset'] : 0),
+                            'taxCategory' 		=> isset($assetValue['taxCategory']) ? emptyDefault($assetValue['taxCategory']) : '',
+                            'expectedLifeTime' 	=> isset($assetValue['expectedLifeTime']) ? zeroDefault($assetValue['expectedLifeTime']) : 0,
+                            'lifeTimeUnit' 		=> isset($assetValue['lifeTimeUnit']) ? emptyDefault($assetValue['lifeTimeUnit']) : '',
+                            'cost' 				=> isset($assetValue['cost']) ? zeroDefault($assetValue['cost']) : 0,
+                            'residuVal' 		=> isset($assetValue['residuVal']) ? zeroDefault($assetValue['residuVal']) : 0,
+                            'bookVal' 			=> isset($assetValue['bookVal']) ? zeroDefault($assetValue['bookVal']) : 0,
+                            'currentLifeTime' 	=> isset($assetValue['currentLifeTime']) ? zeroDefault($assetValue['currentLifeTime']) : 0,
+                            'percentLifeTime' 	=> isset($assetValue['percentLifeTime']) ? zeroDefault($assetValue['percentLifeTime']) : 0,
+                            'presentDate' 		=> isset($assetValue['presentDate']) ? emptyDefault($assetValue['presentDate']) : '',
+                            'calcStart' 		=> isset($assetValue['calcStart']) ? emptyDefault($assetValue['calcStart']) : '',
+                        ],
+                    ];
                 }
             }
 
@@ -313,7 +305,7 @@ class Assets extends INS_Controller {
                 $parentID = ($pk ? $pk : $response['data'][0]);
                 // START OF DELETE ASSET
                 if (!empty($data['deletedPieces'])) {
-                    $collectedDeletedData = array();
+                    $collectedDeletedData = [];
                     foreach ($data['deletedPieces'] as $key => $value) {
                         $collectedDeletedData[] = (int)$value;
                     }
@@ -322,106 +314,94 @@ class Assets extends INS_Controller {
                 // END OF DELETE ASSET
 
                 // START INSERT/UPDATE PIECES
-                $collectedData = array();
-                $collectedUpdatedData = array();
+                $collectedData = [];
+                $collectedUpdatedData = [];
                 if (isset($data['instruments'])) {
                     foreach ($data['instruments'] as $insKey => $insValue) {
                         for ($i=1; $i <= $insValue['quantity']; $i++) { 
-                            $assetNameParameters = array();
-                            $assetNameParameters['directFilters']['EXACTOR'][] = array(
-                                'column' => 'idAssetMaster',
-                                'value' => $insValue['idAssetMaster']
-                            );
+                            $assetNameParameters = [];
+                            $assetNameParameters['directFilters']['EXACTOR'][] = ['column' => 'idAssetMaster', 'value' => $insValue['idAssetMaster']];
     
                             $assetName[$insKey] = runAPI('asset/masterquery', 'POST', NULL, $assetNameParameters);
     
                             if ($pk) {
                                 if ($insValue['idAsset'] != '') {
-                                    $collectedUpdatedData[] = array(
+                                    $collectedUpdatedData[] = [
                                         'idAsset' => $insValue['idAsset'],
                                         'idAssetMaster' => $insValue['idAssetMaster'],
                                         'assetParent' => $parentID,
                                         'catCode' => $insValue['catCode'],
                                         'assetName' => $assetName[$insKey]['data'][0]['assetMasterName']
-                                    );
+                                    ];
                                 } else {
-                                    $collectedData[] = array(
+                                    $collectedData[] = [
                                         'idAssetMaster' => $insValue['idAssetMaster'],
-                                        'assetParent' => $parentID,
-                                        'catCode' => $insValue['catCode'],
-                                        'assetName' => $assetName[$insKey]['data'][0]['assetMasterName'],
-                                        'hasPropAdmin' => true,
-                                        'propAdmin' => array(
-                                            'idAsset' => $parentID,
-                                            'riskLevel' => '',
+                                        'assetParent' 	=> $parentID,
+                                        'catCode' 		=> $insValue['catCode'],
+                                        'assetName' 	=> $assetName[$insKey]['data'][0]['assetMasterName'],
+                                        'hasPropAdmin' 	=> true,
+                                        'propAdmin' 	=> [
+                                            'idAsset' 		=> $parentID,
+                                            'riskLevel' 	=> '',
                                             'ownershipType' => '',
-                                            'condition' => '',
-                                            'status' => '',
-                                            'priceBuy' => $insValue['priceBuy'],
-                                            'procureDate' => date('Y-m-d', strtotime(str_replace('/', '-', $insValue['procureDate'])))
-                                        ),
-                                    );
+                                            'condition' 	=> '',
+                                            'status' 		=> '',
+                                            'priceBuy' 		=> $insValue['priceBuy'],
+                                            'procureDate' 	=> date('Y-m-d', strtotime(str_replace('/', '-', $insValue['procureDate'])))
+                                        ],
+                                    ];
                                 }
                             } else {
-                                $collectedData[] = array(
+                                $collectedData[] = [
                                     'idAssetMaster' => $insValue['idAssetMaster'],
-                                    'assetParent' => $parentID,
-                                    'catCode' => $insValue['catCode'],
-                                    'assetName' => $assetName[$insKey]['data'][0]['assetMasterName']
-                                );
+                                    'assetParent' 	=> $parentID,
+                                    'catCode' 		=> $insValue['catCode'],
+                                    'assetName' 	=> $assetName[$insKey]['data'][0]['assetMasterName']
+                                ];
                             }
                         }
                     }
                 }
 
                 // update pieces
-                if (!empty($collectedUpdatedData)) {
-                    $response = runAPI('asset/update', 'POST', NULL, $collectedUpdatedData);
-                }
+                if (!empty($collectedUpdatedData)) $response = runAPI('asset/update', 'POST', NULL, $collectedUpdatedData);
                 
                 // insert pieces
-                if (!empty($collectedData)) {
-                    $response = runAPI('asset/insert', 'POST', NULL, $collectedData);
-                }
+                if (!empty($collectedData)) $response = runAPI('asset/insert', 'POST', NULL, $collectedData);
                 // // END OF INSERT/UPDATE PIECES
             }
             
-            echo json_encode($response);
+            jsonE($response);
         } else {
             // import from excel
             $importMode = TRUE;
-            $catCode = inputGet('catCode');
+            $catCode 	= inputGet('catCode');
 
-            $inserted = array();
-            $updated = array();
-            $ignored = array();
+            $inserted 	= [];
+            $updated 	= [];
+            $ignored 	= [];
             
             $data = json_decode($data['data'], TRUE);
             
-            if ($catCode == 'MIP')
-                $data = $data[0];
+            if ($catCode == 'MIP') $data = $data[0];
 
             foreach ($data as $key => $value) { // start process each set
-                if ($catCode == 'MIP')
-                    $value[0] = $value;
+                if ($catCode == 'MIP') $value[0] = $value;
 
                 if ($value[0]['importStatus'] != 'ignored') {
-                    $set = array();
+                    $set = [];
 
                     // collect set first
                     if ($value[0]['KODE KATALOG']) {
-                        $parametersSetCatalogue['directFilters']['EXACTOR'][] = array(
-                            'column' => 'productCode',
-                            'value' => $value[0]['KODE KATALOG']
-                        );
-                        $setCatalogue = runAPI('asset/masterquery', 'POST', NULL, $parametersSetCatalogue)['data'][0];
-                        $set_idAssetMaster = $setCatalogue['idAssetMaster'];
+                        $parametersSetCatalogue['directFilters']['EXACTOR'][] = ['column' => 'productCode', 'value' => $value[0]['KODE KATALOG']];
+                        $setCatalogue 		= runAPI('asset/masterquery', 'POST', NULL, $parametersSetCatalogue)['data'][0];
+                        $set_idAssetMaster 	= $setCatalogue['idAssetMaster'];
                     } else
                         $set_idAssetMaster = 0;
 
-                    $set_idAsset = ($value[0]['KODE SISTEM'] ? $value[0]['KODE SISTEM'] : 0);
-                    $set_Container = 0;
-                    $set_Location = 0;
+                    $set_idAsset 	= ($value[0]['KODE SISTEM'] ? $value[0]['KODE SISTEM'] : 0);
+                    $set_Container 	= 0;
+                    $set_Location 	= 0;
 
                     // set up set data
                     $set[] = array(
@@ -522,8 +502,8 @@ class Assets extends INS_Controller {
                 }
             }
 
-            echo json_encode($response['final']);
-            // echo json_encode($repsonse);
+            jsonE($response['final']);
+            // jsonE($repsonse);
             // END OF IMPORT
         }
     }
@@ -706,7 +686,7 @@ class Assets extends INS_Controller {
                 }
             }
 
-            // echo json_encode($finalData); die();
+            // jsonE($finalData); die();
             $finalData = json_encode($finalData);
 
             if ($catCode == 'MIP') {
@@ -715,7 +695,7 @@ class Assets extends INS_Controller {
                 $note = $inserted . ' data akan diimport ('.$set.' set dan '.$piece.' piece), ' . $updated . ' data akan diupdate, dan ' . $ignored . ' data akan diabaikan dari total ' . count($fileData) . ' baris data.';
             }
 
-            echo json_encode(
+            jsonE(
                 array(
                     'header'    => $tableHeader,
                     'data'      => $fileDataOnly,
@@ -750,7 +730,7 @@ class Assets extends INS_Controller {
 
         $response = runAPI('asset/delete', 'POST', NULL, $rowsSelected);
 
-        echo json_encode($response);
+        jsonE($response);
     }
 
     public function expandableContent() {
@@ -834,7 +814,7 @@ class Assets extends INS_Controller {
                 </script>
         ';
         
-        echo json_encode($html);
+        jsonE($html);
     }
 
     function generateBarcode($format = 'png', $symbology = 'qr', $option = '') {
@@ -1129,7 +1109,7 @@ class Assets extends INS_Controller {
 
         $html .= '</tbody></table>';
         
-        echo json_encode($html);
+        jsonE($html);
     }
 
     public function getContainerPieces() {
@@ -1149,7 +1129,7 @@ class Assets extends INS_Controller {
         );
         $response['pieces'] = runAPI('asset/query', 'POST', NULL, $pieceParameters);
 
-        echo json_encode($response);
+        jsonE($response);
     }
 
 }

@@ -359,7 +359,8 @@
 								res = JSON.parse(res);
 								
 								if (res.queryResult) {
-									<?php if (uriSegment(1) == 'location') { ?>
+									// stupid inconsistent API response, so i need to waste more spaces writing a new response handler
+									<?php if (in_array(uriSegment(1), ['location', 'users'])) { ?>
 										if (res.data < 1) {
 											Swal.fire('Warning!', 'Data gagal dihapus!', 'warning');
 											reloadTable();
@@ -631,7 +632,8 @@
 				}).then(res => {
 					res = JSON.parse(res);
 
-					<?php if (uriSegment(1) == 'location') { ?>
+					// stupid inconsistent API response, so i need to waste more spaces writing a new response handler
+					<?php if (in_array(uriSegment(1), ['location', 'users'])) { ?>
 						if (res[0] !== undefined) {
 							if (res[0].data > 0) Swal.fire('Success!', res.message, 'success');
 							else Swal.fire('Error!', res.message, 'error');

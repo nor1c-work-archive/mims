@@ -37,7 +37,7 @@ class Summary extends INS_Controller {
             );
 
             $data = runAPI('asset/query', 'POST', NULL, $parameters);
-            echo json_encode($data); die();
+            jsonE($data); die();
         } else
             $data = runAPI('asset/list', 'GET', )['data'];
 
@@ -57,7 +57,7 @@ class Summary extends INS_Controller {
                 $collectedData[date($modeFormat, strtotime($value['propAdmin']['procureDate']))] +=1;
             }
     
-            echo json_encode(
+            jsonE(
                 array(
                     'categories' => $collectedParameters,
                     'data' => array_values(explode(',', env('MONTH_LIST'))),
@@ -82,7 +82,7 @@ class Summary extends INS_Controller {
                 }
             }
     
-            echo json_encode(
+            jsonE(
                 array(
                     'categories' => $collectedParameters,
                     'data' => array_values($collectedData),

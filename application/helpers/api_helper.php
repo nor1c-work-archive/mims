@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * @param $apiURI
+ * @param $method
+ * @param null $parameters
+ * @param null $data
+ * @param null $additionalOptions
+ * @param null $newToken
+ * @return bool|mixed|string
+ */
 function runAPI($apiURI, $method, $parameters = NULL, $data = NULL, $additionalOptions = NULL, $newToken = NULL) {
 	$rawData = $data;
     $rawParameters = $parameters;
@@ -182,6 +191,15 @@ function runAPI($apiURI, $method, $parameters = NULL, $data = NULL, $additionalO
     }
 }
 
+/**
+ * @param $url
+ * @param null $apiURI
+ * @param null $method
+ * @param null $parameters
+ * @param null $data
+ * @param null $previousHttpStatus
+ * @return mixed
+ */
 function refreshTokenifTokenExpired($url, $apiURI = NULL, $method = NULL, $parameters = NULL, $data = NULL, $previousHttpStatus = NULL) {
     $refreshUrl = $url . 'user/reftok';
     
@@ -217,6 +235,11 @@ function refreshTokenifTokenExpired($url, $apiURI = NULL, $method = NULL, $param
     return $resultRef['token'];
 }
 
+/**
+ * @param $selectedColumns
+ * @param int $totalUnusedColumn
+ * @return array
+ */
 function initParameters($selectedColumns, $totalUnusedColumn = 2) {
     $parameters = [];
 
@@ -265,6 +288,12 @@ function initParameters($selectedColumns, $totalUnusedColumn = 2) {
     return $parameters;
 }
 
+/**
+ * @param null $selectedColumns
+ * @param $result
+ * @param null $deletedKey
+ * @return array
+ */
 function generateData($selectedColumns = NULL, $result, $deletedKey = NULL) {
     $data = [];
 
@@ -390,10 +419,8 @@ function generateData($selectedColumns = NULL, $result, $deletedKey = NULL) {
         'recordsTotal'      => $result['dataCount'],
         'recordsFiltered'   => $result['dataCount'],
         'data'              => $data,
-        'allID'             => (isset($result['allID']) ? $result['allID'] : ''),
-        'token'             => sessionData('token'),
-        'refToken'          => sessionData('refToken'),
+        'allID'             => (isset($result['allID']) ? $result['allID'] : '')
 	];
 
-    echo json_encode($finalData);
+    jsonE($finalData);
 }

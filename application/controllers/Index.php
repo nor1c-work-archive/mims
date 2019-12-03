@@ -24,13 +24,15 @@ class Index extends INS_Controller {
         $data['countMIS'] = 0;
         $data['countMIP'] = 0;
         $data['countMIC'] = 0;
-        foreach ($data['all']['data'] as $key => $asset) {
-        	if ($asset['catCode'] == env('C_CONTAINER'))
-        		$data['countMIC'] += 1;
-			else if ($asset['catCode'] == env('C_SET'))
-				$data['countMIS'] += 1;
-			else if ($asset['catCode'] == env('C_PIECE'))
-				$data['countMIP'] += 1;
+        if (!empty($data['all']['data'])) {
+			foreach ($data['all']['data'] as $key => $asset) {
+				if ($asset['catCode'] == env('C_CONTAINER'))
+					$data['countMIC'] += 1;
+				else if ($asset['catCode'] == env('C_SET'))
+					$data['countMIS'] += 1;
+				else if ($asset['catCode'] == env('C_PIECE'))
+					$data['countMIP'] += 1;
+			}
 		}
 
         render($page, $data);
