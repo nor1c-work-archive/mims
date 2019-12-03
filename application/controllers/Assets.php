@@ -45,7 +45,6 @@ class Assets extends INS_Controller {
 				['column' => 'propAdmin.status', 'alias' => 'STATUS', 'width' => 10, 'searchable' => FALSE, 'hide' => FALSE],
 				['column' => 'propAdmin.priceBuy', 'alias' => 'HARGA BELI', 'width' => 10, 'searchable' => TRUE, 'hide' => FALSE],
 				['column' => 'propAdmin.procureDate', 'alias' => 'TANGGAL PEROLEHAN', 'width' => 15, 'searchable' => FALSE, 'hide' => FALSE],
-				// ['column' => 'propInstrument.insCategory', 'alias' => 'KATEGORI', 'width' => 20, 'searchable' => FALSE, 'hide' => ($this->catCode == env('C_SET') ? FALSE : TRUE)]
 			];
         }
 

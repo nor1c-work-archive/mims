@@ -31,13 +31,19 @@
 							</div>
 						</div>
 						<div class="form-group row align-items-center mb-0">
-							<label class="col-4 control-label col-form-label">KATEGORI ASET</label>
+							<label for="" class="col-4 control-label col-form-label">RUANGAN</label>
 							<div class="col-4 border-left pb-2 pt-2">
-								<select id="filter_insCategory" name="insCategory" class="form-control select2" style="width:100%">
-									<option value="">- Semua Kategori -</option>
-								</select>
+								<select name="filter_locationRoom" id="filter_locationRoom" class="form-control filter_locationRoom" style="width:100%"></select>
 							</div>
 						</div>
+<!--						<div class="form-group row align-items-center mb-0">-->
+<!--							<label class="col-4 control-label col-form-label">KATEGORI ASET</label>-->
+<!--							<div class="col-4 border-left pb-2 pt-2">-->
+<!--								<select id="filter_insCategory" name="insCategory" class="form-control select2" style="width:100%">-->
+<!--									<option value="">- Semua Kategori -</option>-->
+<!--								</select>-->
+<!--							</div>-->
+<!--						</div>-->
 						<div class="form-group row align-items-center mb-0">
 							<label class="col-4 control-label col-form-label">HARGA BELI</label>
 							<div class="col-3 border-left pb-2 pt-2">
@@ -61,21 +67,13 @@
 							</div>
 						</div>
 						<!-- <div class="form-group row align-items-center mb-0">
-                        <label class="col-4 control-label col-form-label">LOKASI/RUANGAN</label>
-                        <div class="col-8 border-left pb-2 pt-2">
-                            <select id="filter_idLocation" name="idLocation" class="form-control select2" style="width:100%">
-                                <option value="" selected>- Semua Lokasi/Ruangan -</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row align-items-center mb-0">
-                        <label class="col-4 control-label col-form-label">SUPPLIER</label>
-                        <div class="col-6 border-left pb-2 pt-2">
-                            <select id="filter_supplier" name="supplier" class="form-control select2" style="width:100%">
-                                <option value="" selected>- Semua Supplier -</option>
-                            </select>
-                        </div>
-                    </div> -->
+							<label class="col-4 control-label col-form-label">SUPPLIER</label>
+							<div class="col-6 border-left pb-2 pt-2">
+								<select id="filter_supplier" name="supplier" class="form-control select2" style="width:100%">
+									<option value="" selected>- Semua Supplier -</option>
+								</select>
+							</div>
+						</div> -->
 						<div class="form-group row align-items-center mb-0">
 							<label class="col-4 control-label col-form-label">MERK</label>
 							<div class="col-4 border-left pb-2 pt-2">
@@ -164,5 +162,22 @@
 
 			$('select[name="merk"]').append(Opt);
 		});
+
+		// Default Option Location Room
+		$.ajax({
+			'url': '<?= site_url('ajax/room') ?>',
+		}).then(res => {
+			res = JSON.parse(res);
+
+			var Opt = '';
+			for (key in res) {
+				Opt += '<option value="<?=env('L_ROOM')?>' + res[key].split('|')[0].split('-')[1].replace(' ', '') + '">' + res[key] + '</option>';
+			}
+
+			console.log(Opt);
+
+			$('select[name="filter_locationRoom"]').append(Opt);
+		});
+		$('.filter_locationRoom').select2();
 	});
 </script>

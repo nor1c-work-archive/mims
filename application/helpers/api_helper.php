@@ -13,182 +13,195 @@ function runAPI($apiURI, $method, $parameters = NULL, $data = NULL, $additionalO
 	$rawData = $data;
     $rawParameters = $parameters;
 
-    $baseAPIURL = 'https://miis-api.samrs.cloud/';
+    $baseAPIURL = env('API_URI');
 
     $url = $baseAPIURL . $apiURI;
 
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
-    // curl_setopt($ch, CURLOPT_HEADER, 1);
-    curl_setopt($ch, CURLOPT_VERBOSE, true);  
-    curl_setopt($ch, CURLOPT_USERAGENT, 'any');
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
+	curl_setopt($ch, CURLOPT_HEADER, false);
+	curl_setopt($ch, CURLOPT_USERAGENT, 'any');
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+	curl_setopt($ch, CURLOPT_AUTOREFERER, false);
 
-    $headers[] = 'Access-Control-Allow-Origin: *';
-    $headers[] = 'X-HTTP-Method-Override: ' . $method;
-    $headers[] = 'Accept: application/json';
-    // $headers[] = 'Content-Type: image/jpeg';
+    if (strstr($apiURI, 'file/download')) {
+		// file detail
+		$fileDetail = runAPI(str_replace('download', 'ByID', $apiURI), 'GET');
+		$filename 	= $fileDetail['data']['fileName'];
 
-    if (isLoggedIn())
-        $headers[] = 'Authorization: Bearer ' . ($newToken ? $newToken : sessionData('token'));
+		$fileLocation = env('TEMP_IMAGE_DIR').$filename;
 
-    switch ($method) {
-        case 'POST':
-                // initialize post
-                if ($data) {
-                    $data['qG'][0] = []; // BETWEEN
-                    $data['qG'][1] = []; // LIKEOR
-                    $data['qG'][2] = []; // LIKEAND
-                    $data['qG'][3] = []; // EXACTOR
+		if (!file_exists($fileLocation)) {
+			$headers[] = 'Authorization: Bearer ' . sessionData('token');
+			$headers[] = 'Access-Control-Allow-Origin: *';
+			$headers[] = 'X-HTTP-Method-Override: GET';
+			$headers[] = 'Accept: application/json';
+			$headers[] = 'Content-Type: application/json; charset=utf-8';
 
-                    // initialize additional parameters
-                    if (isset($data['additional']) && !empty($data['additional'])) {
-                        foreach ($data['additional'] as $paramKey => $paramValue) {
-                            $data['qG'][3]['queryMethod'] = 'EXACTOR';
-                            $data['qG'][3]['queryParams'] = [
-                                [
-                                    "column" => $paramKey,
-                                    "value" => $paramValue
+			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+			$result = curl_exec($ch);
+			curl_close($ch);
+
+			$fp = fopen($fileLocation, 'wb');
+			fwrite($fp, $result);
+			fclose($fp);
+		}
+
+		return $fileLocation;
+	} else {
+		$headers[] = 'Access-Control-Allow-Origin: *';
+		$headers[] = 'X-HTTP-Method-Override: ' . $method;
+		$headers[] = 'Accept: application/json';
+
+		if (isLoggedIn())
+			$headers[] = 'Authorization: Bearer ' . ($newToken ? $newToken : sessionData('token'));
+
+		switch ($method) {
+			case 'POST':
+				// initialize post
+				if ($data) {
+					$data['qG'][0] = []; // BETWEEN
+					$data['qG'][1] = []; // LIKEOR
+					$data['qG'][2] = []; // LIKEAND
+					$data['qG'][3] = []; // EXACTOR
+
+					// initialize additional parameters
+					if (isset($data['additional']) && !empty($data['additional'])) {
+						foreach ($data['additional'] as $paramKey => $paramValue) {
+							$data['qG'][3]['queryMethod'] = 'EXACTOR';
+							$data['qG'][3]['queryParams'] = [
+								[
+									"column" => $paramKey,
+									"value" => $paramValue
 								]
 							];
-                        }
-                        unset($data['additional']);
-                    }
+						}
+						unset($data['additional']);
+					}
 
-                    // initialize order parameters
-                    if (isset($data['order']) && !empty($data['order'])) {
-                        $order = explode('$', $data['order']);
-                        $data['sortingParams'][] = ['column' => $order[0],"value" => $order[1]];
-                        unset($data['order']);
-                    }
+					// initialize order parameters
+					if (isset($data['order']) && !empty($data['order'])) {
+						$order = explode('$', $data['order']);
+						$data['sortingParams'][] = ['column' => $order[0],"value" => $order[1]];
+						unset($data['order']);
+					}
 
-                    // initialize datatable search
-                    if (isset($data['search']) && !empty($data['search'])) {
-                        $searchParams = [];
-                        foreach ($data['search'] as $paramKey => $paramValue) {
-                            if ($paramKey != 'method') {
-                                $searchParams[] = ["column" => $paramKey,"value" => $paramValue];
-                            }
-                        }
+					// initialize datatable search
+					if (isset($data['search']) && !empty($data['search'])) {
+						$searchParams = [];
+						foreach ($data['search'] as $paramKey => $paramValue) {
+							if ($paramKey != 'method') {
+								$searchParams[] = ["column" => $paramKey,"value" => $paramValue];
+							}
+						}
 
-                        if (!empty($searchParams)) {
-                            $data['qG'][1]['queryMethod'] = 'LIKEOR';
-                            $data['qG'][1]['queryParams'] = $searchParams;
-                        }
+						if (!empty($searchParams)) {
+							$data['qG'][1]['queryMethod'] = 'LIKEOR';
+							$data['qG'][1]['queryParams'] = $searchParams;
+						}
 
-                        unset($data['search']);
-                    }
+						unset($data['search']);
+					}
 
-                    if (isset($data['directFilters']) && !empty($data['directFilters'])) {
-                        foreach ($data['directFilters'] as $key => $value) {
-                            if ($key == 'BETWEEN') {
-                                $data['qG'][0]['queryMethod'] = 'BETWEEN';
-                                $data['qG'][0]['queryParams'] = $value;
-                            } else if ($key == 'LIKEAND') {
-                                $data['qG'][1]['queryMethod'] = 'LIKEAND';
-                                $data['qG'][1]['queryParams'] = $value;
-                            } else if ($key == 'EXACTOR') {
-                                $data['qG'][2]['queryMethod'] = 'EXACTOR';
-                                $data['qG'][2]['queryParams'] = $value;
-                            }
-                        }
-                        unset($data['directFilters']);
-                    }
-                }
-                
-                if (!empty($data['qG'])) {
-                    $data['queryGroups'] = [];
-                    foreach ($data['qG'] as $key => $value) {
-                        if (!empty($value)) {
-                            $data['queryGroups'][] = $value;
-                        }
-                    }
-                    unset($data['qG']);
-                }
+					if (isset($data['directFilters']) && !empty($data['directFilters'])) {
+						foreach ($data['directFilters'] as $key => $value) {
+							if ($key == 'BETWEEN') {
+								$data['qG'][0]['queryMethod'] = 'BETWEEN';
+								$data['qG'][0]['queryParams'] = $value;
+							} else if ($key == 'LIKEAND') {
+								$data['qG'][1]['queryMethod'] = 'LIKEAND';
+								$data['qG'][1]['queryParams'] = $value;
+							} else if ($key == 'EXACTOR') {
+								$data['qG'][2]['queryMethod'] = 'EXACTOR';
+								$data['qG'][2]['queryParams'] = $value;
+							}
+						}
+						unset($data['directFilters']);
+					}
+				}
 
-                if (!empty($data['queryGroups']))
-                    $data['queryGroupMethod'] = 'AND';
-                else
-                    unset($data['queryGroups']);
+				if (!empty($data['qG'])) {
+					$data['queryGroups'] = [];
+					foreach ($data['qG'] as $key => $value) {
+						if (!empty($value)) {
+							$data['queryGroups'][] = $value;
+						}
+					}
+					unset($data['qG']);
+				}
 
-                // page limitation required page number
-                // if (isset($data['limit']) && !empty($data['limit']))
-                //     $data['page'] = 1;
+				if (!empty($data['queryGroups']))
+					$data['queryGroupMethod'] = 'AND';
+				else
+					unset($data['queryGroups']);
 
-                if (isset($additionalOptions['withFile']) && $additionalOptions['withFile']) {
-                    $headers[] = 'Content-Type: multipart/form-data';
+				// page limitation required page number
+				// if (isset($data['limit']) && !empty($data['limit']))
+				//     $data['page'] = 1;
 
-                    $data = [
-                        'files' => new \CURLFile($data['files'], $data['type'], $data['filename'].'.'.explode('/', $data['type'])[1])
+				if (isset($additionalOptions['withFile']) && $additionalOptions['withFile']) {
+					$headers[] = 'Content-Type: multipart/form-data';
+
+					$data = [
+						'files' => new \CURLFile($data['files'], $data['type'], $data['filename'].'.'.explode('/', $data['type'])[1])
 					];
-                } else {
-                    $headers[] = 'Content-Type: application/json; charset=utf-8';
-                    $data = json_encode($data);
+				} else {
+					$headers[] = 'Content-Type: application/json; charset=utf-8';
+					$data = json_encode($data);
 				}
 
-                curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
 				curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-			break;
+				break;
 
-        case 'GET':
-                // initialize parameters
-                if ($parameters) {
-                    $url .= '?';
+			case 'GET':
+				// initialize parameters
+				if ($parameters) {
+					$url .= '?';
 
-                    if (isset($additionalOptions['query']) && $additionalOptions['query']) {
-                        foreach ($parameters as $paramKey => $paramValue) {
-                            $url .= $paramKey . '=' . $paramValue;
-                        }
-                    } else {
-                        $url .= 'query=';
-                        
-                        // Pagination
-                        if (isset($parameters['page']) && isset($parameters['limit'])) {
-                            $url .= 'page=' . $parameters['page'] . '??' . 'limit=' . $parameters['limit'] . '??';
-                        }
-                    }
+					if (isset($additionalOptions['query']) && $additionalOptions['query']) {
+						foreach ($parameters as $paramKey => $paramValue) {
+							$url .= $paramKey . '=' . $paramValue;
+						}
+					} else {
+						$url .= 'query=';
+
+						// Pagination
+						if (isset($parameters['page']) && isset($parameters['limit'])) {
+							$url .= 'page=' . $parameters['page'] . '??' . 'limit=' . $parameters['limit'] . '??';
+						}
+					}
 				}
-            break;
+				break;
 
-        default:
-            break;
+			default:
+				break;
+		}
+
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+		$result = curl_exec($ch);
+		$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		curl_close($ch);
+
+		$result = json_decode($result, TRUE);
+		$result['httpStatus'] = $http_status;
+
+		if ($http_status == 401 && isLoggedIn()) {
+			$newToken = refreshTokenifTokenExpired($baseAPIURL, $apiURI, $method, $rawParameters, $rawData, $http_status);
+			return runAPI($apiURI, $method, $rawParameters, $rawData, NULL, $newToken);
+		} else {
+			return $result;
+		}
 	}
+}
 
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    // curl_setopt($ch, CURLOPT_HEADER, true);
+function downloadFile($apiURI, $method, $parameters = NULL, $data = NULL, $additionalOptions = NULL, $newToken = NULL) {
 
-    $result = curl_exec($ch);
-    
-    $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
-
-    // $file_array = explode("\n\r", $result, 2);
-    // $header_array = explode("\n", $file_array[0]);
-    // foreach($header_array as $header_value) {
-    //     $header_pieces = explode(':', $header_value);
-    //     if(count($header_pieces) == 2) {
-    //         $headers[$header_pieces[0]] = trim($header_pieces[1]);
-    //     }
-    // }
-    // header('Content-type: image/jpeg');
-    // header("Content-Disposition: attachment; filename=120_25-119-99.jpeg; filename*=UTF-8''120_25-119-99.jpeg");
-    // echo substr($file_array[1], 1);
-
-    if ($apiURI != 'file/download') {
-        $result = json_decode($result, TRUE);
-        $result['httpStatus'] = $http_status;
-    }
-
-    if ($http_status == 401 && isLoggedIn()) {
-        $newToken = refreshTokenifTokenExpired($baseAPIURL, $apiURI, $method, $rawParameters, $rawData, $http_status);
-        return runAPI($apiURI, $method, $rawParameters, $rawData, NULL, $newToken);
-    } else {
-        return $result;
-    }
 }
 
 /**
@@ -330,20 +343,17 @@ function generateData($selectedColumns = NULL, $result, $deletedKey = NULL) {
                 if (strstr($ucKey, 'dummy')) {
                     $column = explode('.', $ucKey)[1];
                     if ($column == 'containerAvailabilityStatus') {
-                        $parameters[$no] = [];
                         $parameters[$no]['directFilters']['EXACTOR'][] = ["column" => "catCode", "value" => env('C_SET')];
                         $parameters[$no]['directFilters']['EXACTOR'][] = ["column" => "assetParent","value" => $dataValue['idAsset']];
                         $containSet[$no] = runAPI('asset/query', 'POST', NULL, $parameters[$no])['data'];
 
                         $data[$no][] = !empty($containSet[$no]) ? 'Filled' : 'Available';
                     } else if ($column == 'pieceInstrumentSet') {
-                        $parameters[$no] = [];
                         $parameters[$no]['directFilters']['EXACTOR'][] = ["column" => "idAsset", "value" => $dataValue['assetParent']];
                         $set[$no] = runAPI('asset/query', 'POST', NULL, $parameters[$no])['data'];
 
                         $data[$no][] = !empty($set[$no]) ? $set[$no][0]['catCode'].'-'.$set[$no][0]['idAsset'] . ' | ' . $set[$no][0]['assetName'] : '-';
                     } else if ($column == 'pieceInstrumentContainer') {
-                        $setParameters[$no] = [];
                         $setParameters[$no]['directFilters']['EXACTOR'][] = ["column" => "idAsset", "value" => $dataValue['assetParent']];
                         $set[$no] = runAPI('asset/query', 'POST', NULL, $setParameters[$no])['data'];
 
@@ -356,12 +366,10 @@ function generateData($selectedColumns = NULL, $result, $deletedKey = NULL) {
                         } else
                             $data[$no][] = '-';
                     } else if ($column == 'setContainer') {
-                        $setParameters[$no] = [];
                         $setParameters[$no]['directFilters']['EXACTOR'][] = ["column" => "idAsset", "value" => $dataValue['idAsset']];
                         $set[$no] = runAPI('asset/query', 'POST', NULL, $setParameters[$no])['data'];
 
                         if (!empty($set[$no])) {
-                            $containerParameters[$no] = [];
                             $containerParameters[$no]['directFilters']['EXACTOR'][] = ["column" => "idAsset", "value" => $set[$no][0]['assetParent']];
                             $container[$no] = runAPI('asset/query', 'POST', NULL, $containerParameters[$no])['data'];
 
@@ -369,12 +377,10 @@ function generateData($selectedColumns = NULL, $result, $deletedKey = NULL) {
                         } else
                             $data[$no][] = '-';
                     } else if ($column == 'roomBuilding') {
-						$parameters[$no] = [];
 						$parameters[$no]['directFilters']['EXACTOR'][] = ['column' => 'idLocation', 'value' => $dataValue['idLocation']];
 						$parentLoc[$no] = runAPI('location/query', 'POST', NULL, $parameters[$no])['data'][0]['parentLoc'];
 
 						if (!empty($parentLoc[$no])) {
-							$buildingParameters[$no] = [];
 							$buildingParameters[$no]['directFilters']['EXACTOR'][] = ["column" => "idLocation", "value" => $parentLoc[$no]];
 							$building[$no] = runAPI('location/query', 'POST', NULL, $buildingParameters[$no])['data'][0];
 

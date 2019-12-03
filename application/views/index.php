@@ -17,7 +17,7 @@
 	<?= css(assets('design/ample/dist/css/style.min.css')) ?>
 	<?=css(assets('dist/css/jquery/jquery-ui.min.css'))?>
 	<?=css(assets('dist/css/jquery/jquery.fancybox.min.css'))?>
-	<?= css(assets('design/ample-admin-bt4/assets/libs/select2/dist/css/select2.min.css')) ?>
+	<?= css(assets('design/ample/assets/libs/select2/dist/css/select2.min.css')) ?>
 	<?= css(assets('dist/css/ins.css')) ?>
 	<style>
 		table {

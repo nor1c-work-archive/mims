@@ -6,7 +6,7 @@ function render($page = '', $data = NULL, $other = FALSE) {
 	$data = array_merge($data, initWebTrack($data['pageTitle']));
 
     if (isLoggedIn()) {
-        // store last visited page too cookie
+        // store last visited page to cookie
         $lastVisitedPage = uriSegment(1).'/'.uriSegment(2).'/'.uriSegment(3);
         setSingleSession('lastVisitedPage', $lastVisitedPage);
 
@@ -59,13 +59,14 @@ function initTitle() {
 
 	switch (uriSegment(1)) {
 		case 'master':
-				$mainPage = 'Katalog';
+			$mainPage = 'Katalog';
 			break;
 		case 'assets':
-				$mainPage = 'Aset';
+			$mainPage = 'Aset';
 			break;
+		case 'users':
 		case 'location':
-				$mainPage = '';
+			$mainPage = '';
 			break;
 	}
 
@@ -83,6 +84,9 @@ function initTitle() {
 			case env('URL_BUILDING'):
 				$pageTitle = $mainPage . ' Building';
 				break;
+			case env('URL_ROOM'):
+				$pageTitle = $mainPage . ' Room';
+				break;
 		}
 	} else {
 		switch (uriSegment(1)) {
@@ -94,6 +98,7 @@ function initTitle() {
 
 	$data['pageTitle'] = $pageTitle;
 	$data['title'] = ($pageTitle ? $pageTitle . ' | ' : '') .  env('APP_NAME') . ' v' . env('APP_VER');
+	$data['title'] = $data['title'] != ' v ' ? $data['title'] : env('APP_NAME') . ' v ' . env('APP_VER');
 
 	return $data;
 }

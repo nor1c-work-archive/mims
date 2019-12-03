@@ -4,19 +4,32 @@ class Location extends INS_Controller {
     
     public function __construct() {
         parent::__construct();
+
         $this->locationType         = uriSegment(3);
         $this->totalUnusedColumn    = 2;
 	}
 	
 	public function selectedColumns() {
-		return [
-			['column' => 'idLocation', 'alias' => 'ID', 'width' => 5, 'searchable' => FALSE, 'hide' => FALSE],
-			['column' => 'locType', 'alias' => 'LOCATION CODE', 'width' => 8, 'searchable' => TRUE, 'hide' => FALSE, 'replaceOrder' => 'idLocation'],
-			['column' => 'locName', 'alias' => 'LOCATION NAME', 'width' => 10, 'searchable' => TRUE, 'hide' => FALSE],
-			// ['column' => 'dummy.roomBuilding', 'alias' => 'LOKASI GEDUNG', 'width' => 10, 'searchable' => FALSE, 'hide' => (uriSegment(3) == env('URL_BUILDING') ? TRUE : FALSE)],
-			['column' => 'locLonglat', 'alias' => 'COORDINATE', 'width' => 15, 'searchable' => TRUE, 'hide' => FALSE],
-			['column' => 'locDesc', 'alias' => 'DESCRIPTION', 'width' => 25, 'searchable' => TRUE, 'hide' => FALSE],
-		];
+		if ($this->locationType == env('URL_BUILDING') || inputGet('locType') == strtoupper(env('URL_BUILDING'))) {
+			$selectedColumns = [
+				['column' => 'idLocation', 'alias' => 'ID', 'width' => 5, 'searchable' => FALSE, 'hide' => FALSE],
+				['column' => 'locType', 'alias' => 'LOCATION CODE', 'width' => 8, 'searchable' => TRUE, 'hide' => FALSE, 'replaceOrder' => 'idLocation'],
+				['column' => 'locName', 'alias' => 'LOCATION NAME', 'width' => 10, 'searchable' => TRUE, 'hide' => FALSE],
+				['column' => 'locLonglat', 'alias' => 'COORDINATE', 'width' => 15, 'searchable' => TRUE, 'hide' => FALSE],
+				['column' => 'locDesc', 'alias' => 'DESCRIPTION', 'width' => 25, 'searchable' => TRUE, 'hide' => FALSE],
+			];
+		} else {
+			$selectedColumns = [
+				['column' => 'idLocation', 'alias' => 'ID', 'width' => 5, 'searchable' => FALSE, 'hide' => FALSE],
+				['column' => 'locType', 'alias' => 'LOCATION CODE', 'width' => 8, 'searchable' => TRUE, 'hide' => FALSE, 'replaceOrder' => 'idLocation'],
+				['column' => 'locName', 'alias' => 'LOCATION NAME', 'width' => 10, 'searchable' => TRUE, 'hide' => FALSE],
+				['column' => 'dummy.roomBuilding', 'alias' => 'LOKASI GEDUNG', 'width' => 10, 'searchable' => FALSE, 'hide' => FALSE],
+				['column' => 'locLonglat', 'alias' => 'COORDINATE', 'width' => 15, 'searchable' => TRUE, 'hide' => FALSE],
+				['column' => 'locDesc', 'alias' => 'DESCRIPTION', 'width' => 25, 'searchable' => TRUE, 'hide' => FALSE],
+			];
+		}
+
+		return $selectedColumns;
 	}
 
     public function index() {

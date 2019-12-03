@@ -33,19 +33,12 @@
         res = res[0];
         $('#detailModalTitle').html('Detail Katalog <b>' + res.catCode+'-'+res.idAssetMaster +' | '+res.assetMasterName + '</b>');
 
-        // $.ajax({
-        //     url: '<?=site_url(uriSegment(1).'/getImage')?>?id=' + res.idPictMain,
-        //     type: 'GET',
-        // }).then(res => {
-        //     console.log(res);
-        // });
         var detailHtml = '';
-        detailHtml +=   
-                        // '<tr>'+
-                        //     '<td colspan="2">'+
-                        //         '<img src="#" id="twinImg">'+
-                        //     '</td>'+
-                        // '</tr>'+
+        detailHtml +=   '<tr>'+
+                            '<td colspan="2" style="text-align:center">'+
+                                '<img src="" id="cataloguePict" style="width:50%;">'+
+                            '</td>'+
+                        '</tr>'+
                         '<tr>'+
                             '<th>KODE SISTEM</th>'+
                             '<td><?=uriSegment(3)?>-'+res.idAssetMaster+'</td>'+
@@ -66,33 +59,20 @@
 
         $('#detail').html(detailHtml);
 
-        // get image
-        var xhr = new XMLHttpRequest();
-		
-        xhr.open('GET', '<?=site_url('master/getImage?id=')?>' + res.idPictMain, true);
-		
-		xhr.onload = function(){
-			var img = new Image();
-			var response = xhr.responseText;
-            // console.log(response);
-			var binary = ""
-			
-			for(i=0;i<response.length;i++){
-				binary += String.fromCharCode(response.charCodeAt(i) & 0xff);
+		$.ajax({
+			url: '<?=site_url(uriSegment(1).'/getImage')?>?id=' + res.idPictMain,
+			type: 'GET',
+		}).then(res => {
+			if (res != '') {
+				var imgSource = '<?=base_url('')?>' + res.replace('./', '');
+			} else {
+				var imgSource = '<?=base_url('assets/images/web-components/templates/not-available.jpg')?>';
 			}
-			
-			img.src = 'data:image/jpeg;base64,' + btoa(binary);
-			var canvas = document.getElementById('showImage');
-			var context = canvas.getContext('2d');
-				
-			context.drawImage(img,0,0);
-			var snapshot = canvas.toDataURL("image/png");
-			var twinImage = document.getElementById('twinImg');
-			twinImage.src = snapshot;
-		}
-		
-		xhr.overrideMimeType('text/plain; charset=x-user-defined');
-		xhr.send();
+
+			$('#cataloguePict').attr('src', imgSource).load(function () {
+				this.width;
+			});
+		});
     }
 
 </script>

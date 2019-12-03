@@ -43,22 +43,21 @@ switch (uriSegment(3)) {
 			$('#detailModalTitle').html('Detail <?= $locType ?> <b><?= env('L_' . strtoupper(uriSegment(3))) ?>-' + res.idLocation + ' | ' + res.locName + '</b>');
 
 			var detailHtml = '';
-			detailHtml +=
-				'<tr>' +
+			detailHtml += '<tr>' +
 				'<th>KODE SISTEM</th>' +
-				'<td><?= env('L_' . strtoupper(uriSegment(3))) ?>-' + res.idLocation + '</td>' +
+					'<td><?= env('L_' . strtoupper(uriSegment(3))) ?>-' + res.idLocation + '</td>' +
 				'</tr>' +
 				'<tr>' +
-				'<th>NAMA <?= strtoupper(uriSegment(3)) ?></th>' +
-				'<td>' + res.locName + '</td>' +
+					'<th>NAMA <?= strtoupper(uriSegment(3)) ?></th>' +
+					'<td>' + res.locName + '</td>' +
 				'</tr>' +
 				'<tr>' +
-				'<th>KOORDINAT</th>' +
-				'<td>' + res.locLonglat + '</td>' +
+					'<th>KOORDINAT</th>' +
+					'<td>' + res.locLonglat + '</td>' +
 				'</tr>' +
 				'<tr>' +
-				'<th>DESKRIPSI</th>' +
-				'<td>' + res.locDesc + '</td>' +
+					'<th>DESKRIPSI</th>' +
+					'<td>' + res.locDesc + '</td>' +
 				'</tr>';
 
 			$('#detail').html(detailHtml);

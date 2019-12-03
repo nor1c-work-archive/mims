@@ -19,7 +19,7 @@
                                 <tr>
                                     <th>KODE KATALOG</th>
                                     <th>NAMA KATALOG</th>
-                                    <th>MERK</th>
+<!--                                    <th>MERK</th>-->
                                     <th>FOTO</th>
                                     <th width="70" id="deleteTH"></th>
                                 </tr>
@@ -74,10 +74,10 @@
                         '<td>'+
                             '<input type="text" class="form-control" name="instruments['+addCount+'][assetMasterName]" id="assetMasterName" placeholder="Nama Instrument" required>'+
                         '</td>'+
-                        '<td>'+
+                        // '<td>'+
                             // '<input type="text" class="form-control" name="instruments['+addCount+'][merk]" id="merk" placeholder="Merk" required>'+
-							'<select name="instruments['+addCount+'][merk]" id="instrumentsMerk_'+addCount+'" class="form-control select2" style="width:100%;"></select>'+
-                        '</td>'+
+						// 	'<select name="instruments['+addCount+'][merk]" id="instrumentsMerk_'+addCount+'" class="form-control select2" style="width:100%;"></select>'+
+                        // '</td>'+
                         '<td>'+
                             '<input type="file" class="my-pond" name="instruments[pic]['+addCount+']" id="pic"/>'+
                         '</td>'+
@@ -107,10 +107,10 @@
                         '<td>'+
                             '<input type="text" class="form-control" name="instruments['+addCount+'][assetMasterName]" id="assetMasterName" placeholder="Nama Instrument" required>'+
                         '</td>'+
-                        '<td>'+
+                        // '<td>'+
                             // '<input type="text" class="form-control" name="instruments['+addCount+'][merk]" id="merk" placeholder="Merk" required>'+
-							'<select name="instruments['+addCount+'][merk]" id="instrumentsMerk_'+addCount+'" class="form-control select2" style="width:100%;"></select>'+
-                        '</td>'+
+						// 	'<select name="instruments['+addCount+'][merk]" id="instrumentsMerk_'+addCount+'" class="form-control select2" style="width:100%;"></select>'+
+                        // '</td>'+
                         '<td>'+
                             '<input type="file" class="my-pond" name="instruments[pic]['+addCount+']" id="pic"/>'+
                         '</td>'+
@@ -151,10 +151,10 @@
                             '<td>'+
                                 '<input type="text" class="form-control" name="instruments['+addCount+'][assetMasterName]" placeholder="Nama Instrument" required>'+
                             '</td>'+
-                            '<td>'+
+                            // '<td>'+
                                 // '<input type="text" class="form-control" name="instruments['+addCount+'][merk]" placeholder="Merk" required>'+
-								'<select name="instruments['+addCount+'][merk]" id="instrumentsMerk_'+addCount+'" class="form-control select2" style="width:100%;"></select>'+
-                            '</td>'+
+							// 	'<select name="instruments['+addCount+'][merk]" id="instrumentsMerk_'+addCount+'" class="form-control select2" style="width:100%;"></select>'+
+                            // '</td>'+
                             '<td>'+
                                 '<input type="file" class="my-pond" name="instruments[pic]['+addCount+']"/>'+
                             '</td>'+

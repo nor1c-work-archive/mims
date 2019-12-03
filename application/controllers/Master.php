@@ -134,11 +134,13 @@ class Master extends INS_Controller {
     }
 
     public function getImage() {
-        $pk = inputGet('id');
+		$pk = inputGet('id');
 
-        $parameters['reqID'] = $pk;
+        if ($pk)
+			$result = runAPI('file/download?reqID='.$pk, 'GET');
+		else
+			$result = '';
 
-        $result = runAPI('file/download', 'GET', $parameters, NULL, ['query' => TRUE]);
         echo $result;
     }
 
@@ -183,7 +185,7 @@ class Master extends INS_Controller {
                     'catCode' => $value['catCode'],
                     'productCode' => $value['productCode'],
                     'assetMasterName' => $value['assetMasterName'],
-                    'merk' => $value['merk'],
+//                    'merk' => $value['merk'],
 				];
 
                 if ($insertedFiles[$key]) {
